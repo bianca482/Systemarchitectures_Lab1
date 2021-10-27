@@ -16,6 +16,7 @@ public class SystemarchitecturesLab1CqrsApplication {
 
     @GetMapping("/hello")
     public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
+        //Test to see if pushing works
         return String.format("Hello %s!", name);
     }
 
