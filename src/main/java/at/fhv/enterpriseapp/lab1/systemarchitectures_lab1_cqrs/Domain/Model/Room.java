@@ -11,11 +11,11 @@ public class Room {
         _category = category;
     }
 
-    public RoomNr get_roomNr() {
+    public RoomNr roomNr() {
         return _roomNr;
     }
 
-    public RoomCategory get_category() {
+    public RoomCategory category() {
         return _category;
     }
 

@@ -9,7 +9,7 @@ public class ReservationNr {
         _number = number;
     }
 
-    public String get_number() {
+    public String number() {
         return _number;
     }
 

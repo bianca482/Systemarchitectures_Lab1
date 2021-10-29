@@ -9,7 +9,7 @@ public class RoomNr {
         _number = number;
     }
 
-    public int get_number() {
+    public int number() {
         return _number;
     }
 

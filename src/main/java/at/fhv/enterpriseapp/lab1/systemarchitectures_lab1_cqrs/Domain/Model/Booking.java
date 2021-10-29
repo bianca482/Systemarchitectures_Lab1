@@ -21,31 +21,31 @@ public class Booking {
         _guestId = guestId;
     }
 
-    public ReservationNr get_reservationNr() {
+    public ReservationNr reservationNr() {
         return _reservationNr;
     }
 
-    public LocalDate get_checkInDate() {
+    public LocalDate checkInDate() {
         return _checkInDate;
     }
 
-    public LocalDate get_checkOutDate() {
+    public LocalDate checkOutDate() {
         return _checkOutDate;
     }
 
-    public int get_guestCount() {
+    public int guestCount() {
         return _guestCount;
     }
 
-    public String get_guestName() {
+    public String guestName() {
         return _guestName;
     }
 
-    public String get_guestId() {
+    public String guestId() {
         return _guestId;
     }
 
-    public Room get_room() {
+    public Room room() {
         return _room;
     }
 

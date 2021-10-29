@@ -11,11 +11,11 @@ public class RoomAssignment {
         this._roomNr = _roomNr;
     }
 
-    public ReservationNr get_reservationNr() {
+    public ReservationNr reservationNr() {
         return _reservationNr;
     }
 
-    public RoomNr get_roomNr() {
+    public RoomNr roomNr() {
         return _roomNr;
     }
 
