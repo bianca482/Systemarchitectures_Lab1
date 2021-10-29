@@ -1,6 +1,8 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs;
 
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.Domain.Model.Room;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.Room;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomCategory;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomNr;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
