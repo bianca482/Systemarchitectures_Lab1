@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.Domain.Model;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -9,10 +9,10 @@ public class Booking {
     private LocalDate _checkOutDate;
     private int _guestCount;
     private String _guestName;
-    private String _guestId;
+    private GuestId _guestId;
     private Room _room;
 
-    public Booking(ReservationNr reservationNr, LocalDate checkInDate, LocalDate checkOutDate, int guestCount, String guestName, String guestId) {
+    public Booking(ReservationNr reservationNr, LocalDate checkInDate, LocalDate checkOutDate, int guestCount, String guestName, GuestId guestId) {
         _reservationNr = reservationNr;
         _checkInDate = checkInDate;
         _checkOutDate = checkOutDate;
@@ -41,7 +41,7 @@ public class Booking {
         return _guestName;
     }
 
-    public String guestId() {
+    public GuestId guestId() {
         return _guestId;
     }
 
