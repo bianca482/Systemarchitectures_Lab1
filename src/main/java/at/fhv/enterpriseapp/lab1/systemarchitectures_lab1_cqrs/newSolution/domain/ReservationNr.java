@@ -3,22 +3,19 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.doma
 import java.util.Objects;
 
 public class ReservationNr {
-    String _number;
+
+    private String _number;
 
     public ReservationNr(String number) {
         _number = number;
-    }
-
-    public String number() {
-        return _number;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReservationNr that = (ReservationNr) o;
-        return Objects.equals(_number, that._number);
+        ReservationNr roomNr = (ReservationNr) o;
+        return _number.equals(roomNr._number);
     }
 
     @Override

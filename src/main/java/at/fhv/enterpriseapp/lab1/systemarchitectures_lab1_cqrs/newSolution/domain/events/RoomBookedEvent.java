@@ -1,22 +1,37 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.events;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomNr;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.Event;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.BookingNr;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.ReservationNr;
 
 import java.time.LocalDateTime;
 
-public class RoomBookedEvent implements Event {
+public class RoomBookedEvent extends Event {
 
-   public RoomNr roomNr;
-   public BookingNr bookingNr;
-   public LocalDateTime StartTime;
-   public LocalDateTime EndTime;
+   private RoomNr _roomNr;
+   private ReservationNr _reservationNr;
+   private LocalDateTime _checkInTime;
+   private LocalDateTime _checkOutTime;
 
-    public RoomBookedEvent(RoomNr roomNr, BookingNr bookingNr, LocalDateTime startTime, LocalDateTime endTime) {
-        this.roomNr = roomNr;
-        this.bookingNr = bookingNr;
-        StartTime = startTime;
-        EndTime = endTime;
+    public RoomBookedEvent(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
+        _roomNr = roomNr;
+        _reservationNr = reservationNr;
+        _checkInTime = checkInTime;
+        _checkOutTime = checkOutTime;
+    }
+
+    public RoomNr roomNr() {
+        return _roomNr;
+    }
+
+    public ReservationNr reservationNr() {
+        return _reservationNr;
+    }
+
+    public LocalDateTime checkInTime() {
+        return _checkInTime;
+    }
+
+    public LocalDateTime checkOutTime() {
+        return _checkOutTime;
     }
 }

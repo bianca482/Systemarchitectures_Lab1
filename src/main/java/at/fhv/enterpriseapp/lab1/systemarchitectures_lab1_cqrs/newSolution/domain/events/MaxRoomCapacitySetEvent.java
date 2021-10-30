@@ -1,23 +1,22 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.events;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomNr;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.Event;
 
-public class MaxRoomCapacitySetEvent implements Event {
+public class MaxRoomCapacitySetEvent extends Event {
 
-    RoomNr roomNr;
-    int maxCapacity;
+    private RoomNr _roomNr;
+    private int _maxCapacity;
 
-    public RoomNr getRoomNr() {
-        return roomNr;
+    public RoomNr roomNr() {
+        return _roomNr;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
+    public int maxCapacity() {
+        return _maxCapacity;
     }
 
     public MaxRoomCapacitySetEvent(RoomNr roomNr, int maxCapacity) {
-        this.roomNr = roomNr;
-        this.maxCapacity = maxCapacity;
+        _roomNr = roomNr;
+        _maxCapacity = maxCapacity;
     }
 }

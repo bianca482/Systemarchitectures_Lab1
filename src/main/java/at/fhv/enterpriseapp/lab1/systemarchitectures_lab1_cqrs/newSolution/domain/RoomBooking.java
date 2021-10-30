@@ -5,31 +5,31 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.Room
 import java.time.LocalDateTime;
 
 public class RoomBooking {
-    RoomNr roomNr;
-    BookingNr bookingNr;
-    LocalDateTime StartTime;
-    LocalDateTime EndTime;
+    private RoomNr _roomNr;
+    private ReservationNr _reservationNr;
+    private LocalDateTime _checkInTime;
+    private LocalDateTime _checkOutTime;
 
-    public RoomNr getRoomNr() {
-        return roomNr;
+    public RoomNr roomNr() {
+        return _roomNr;
     }
 
-    public BookingNr getBookingNr() {
-        return bookingNr;
+    public ReservationNr reservationNr() {
+        return _reservationNr;
     }
 
-    public LocalDateTime getStartTime() {
-        return StartTime;
+    public LocalDateTime checkInTime() {
+        return _checkInTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return EndTime;
+    public LocalDateTime checkOutTime() {
+        return _checkOutTime;
     }
 
-    public RoomBooking(RoomNr roomNr, BookingNr bookingNr, LocalDateTime startTime, LocalDateTime endTime) {
-        this.roomNr = roomNr;
-        this.bookingNr = bookingNr;
-        StartTime = startTime;
-        EndTime = endTime;
+    public RoomBooking(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
+        _roomNr = roomNr;
+        _reservationNr = reservationNr;
+        _checkInTime = checkInTime;
+        _checkOutTime = checkOutTime;
     }
 }

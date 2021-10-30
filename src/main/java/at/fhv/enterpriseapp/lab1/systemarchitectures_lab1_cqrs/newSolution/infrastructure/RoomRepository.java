@@ -1,7 +1,8 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.Room;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.events.Event;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,13 +30,13 @@ public class RoomRepository {
             oldEventList = new LinkedList<>();
         }
 
-        List<Event> newEventList = room.getEvents();
+        // Welche Events sind neu? Publish neue Events an Projections
+        List<Event> newEventList = room.roomEvents();
 
         for (int i = oldEventList.size(); i < newEventList.size(); i++) {
             publish(newEventList.get(i));
         }
         _storageMap.put(room.roomNr(), newEventList);
-
     }
 
     public Room get(RoomNr roomNr) {
@@ -46,21 +47,21 @@ public class RoomRepository {
             eventLog = new LinkedList<>();
         }
 
-        Room room = new Room(roomNr, null);
+        Room room = new Room(roomNr, 0);
         for (Event event : eventLog) {
-            room.addEvent(event);
+            room.addRoomEvent(event);
         }
         return room;
 
     }
 
     private void publish(Event event) {
-        for (Projection projection : projections) {
+        for (Projection projection : _projections) {
             projection.receiveEvent(event);
         }
     }
 
     public void subscribe(Projection projection) {
-        projections.add(projection);
+        _projections.add(projection);
     }
 }
