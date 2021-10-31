@@ -5,6 +5,7 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domai
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.Room;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.events.MaxRoomCapacitySetEvent;
 
+import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -18,12 +19,9 @@ public class RoomProjection implements Projection {
             MaxRoomCapacitySetEvent maxRoomCapacitySetEvent = (MaxRoomCapacitySetEvent) event;
             _roomInfoMap.put(maxRoomCapacitySetEvent.roomNr(), new Room(maxRoomCapacitySetEvent.roomNr(), maxRoomCapacitySetEvent.maxCapacity()));
         }
-
     }
 
-    public List<RoomInfo> getAllRooms(){
-        return new LinkedList<>(roomInfoMap.values());
+    public List<Room> getAllRooms() {
+        return new LinkedList<>(_roomInfoMap.values());
     }
-
-
 }

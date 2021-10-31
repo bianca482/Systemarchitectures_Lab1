@@ -1,7 +1,8 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure;
 
-public interface Projection {
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.events.Event;
 
+public interface Projection {
     void receiveEvent(Event event);
 
 }

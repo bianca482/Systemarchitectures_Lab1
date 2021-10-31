@@ -19,6 +19,7 @@ public class BookingReadService {
         List<RoomBooking> roomBookings = _roomBookingProjection.getAllBookings();
         List<RoomBooking> result = new LinkedList<>();
 
+        // ToDo: Logik überdenken/ nachprüfen
         for (RoomBooking roomBooking : roomBookings) {
             if (roomBooking.checkInTime().isAfter(bookingsQuery.checkInTime()) && roomBooking.checkInTime().isBefore(bookingsQuery.checkOutTime())) {
                 result.add(roomBooking);

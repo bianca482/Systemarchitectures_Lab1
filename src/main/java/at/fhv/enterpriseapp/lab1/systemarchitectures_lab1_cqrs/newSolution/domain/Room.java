@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Room {
-    
+
     private RoomNr _roomNr;
     private int _maxCapacity;
     private List<Event> _roomEventLog = new LinkedList<>();

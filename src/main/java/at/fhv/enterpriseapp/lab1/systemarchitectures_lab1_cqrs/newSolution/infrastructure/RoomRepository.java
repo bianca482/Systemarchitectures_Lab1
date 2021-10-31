@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class RoomRepository {
+    private HashMap<RoomNr, List<Event>> _storageMap = new HashMap<>();
+    private List<Projection> _projections = new LinkedList<>();
 
     // In-Memory "Datenbank" aufbauen
     public RoomRepository(List<RoomNr> rooms) {
@@ -17,11 +19,6 @@ public class RoomRepository {
         }
     }
 
-    protected HashMap<RoomNr, List<Event>> _storageMap = new HashMap<RoomNr, List<Event>>();
-
-    protected List<Projection> projections = new LinkedList<>();
-
-    // Welche Events sind neu? Publish neue Events an Projections
     public void save(Room room) {
         List<Event> oldEventList;
         if (_storageMap.containsKey(room.roomNr())) {
@@ -52,7 +49,6 @@ public class RoomRepository {
             room.addRoomEvent(event);
         }
         return room;
-
     }
 
     private void publish(Event event) {
