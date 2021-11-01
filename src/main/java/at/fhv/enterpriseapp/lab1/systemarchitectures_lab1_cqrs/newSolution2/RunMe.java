@@ -52,13 +52,12 @@ public class RunMe {
         //Queries
         //Querie: GetBookings (Parameter: Zeitraum): Zeigt alle Buchungen im gewählten Zeitraum an
         bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2021, 5, 2, 0, 0), LocalDateTime.of(2021, 5, 9, 0, 0), new RoomNr(2), new GuestId("123")));
-        List <Booking> allBookings = bookingReadService.handleQuery(new AllBookingsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0)));
+        List<Booking> allBookings = bookingReadService.handleQuery(new AllBookingsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0)));
         System.out.println("all bookings: " + allBookings);
 
         //Querie: GetFreeRooms (Parameter: Zeitraum, Anzahl Personen): Zeigt die verfügbaren Zimmer für die angefragten Daten an
-        List <Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0), 1));
+        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0), 1));
         System.out.println("free rooms: " + freeRooms);
-}
-
+    }
 }
 

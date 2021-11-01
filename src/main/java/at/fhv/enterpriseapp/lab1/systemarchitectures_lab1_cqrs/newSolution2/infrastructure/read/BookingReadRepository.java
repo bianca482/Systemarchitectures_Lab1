@@ -58,13 +58,10 @@ public class BookingReadRepository implements Projection {
             RoomCancelledEvent roomCancelledEvent = (RoomCancelledEvent) event;
             Booking bookingToCancel = null;
 
-
-            boolean bookingFound = false;
             for (List<Booking> list : _bookings.values()) {
                 for (Booking value : list) {
                     if (value.reservationNr().equals(roomCancelledEvent.reservationNr())) {
                         bookingToCancel = value;
-                        bookingFound = true;
                     }
                 }
                 if(bookingToCancel != null){
