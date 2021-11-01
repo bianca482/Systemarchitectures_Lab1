@@ -8,6 +8,8 @@ public class BookRoomCommand {
     private LocalDateTime _checkOutDate;
     private RoomNr _roomNr;
 
+    // TODO Personen in Buchung hinterlegen
+
     public BookRoomCommand(LocalDateTime checkInDate, LocalDateTime checkOutDate, RoomNr roomNr) {
         _checkInDate = checkInDate;
         _checkOutDate = checkOutDate;

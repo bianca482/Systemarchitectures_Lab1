@@ -7,6 +7,7 @@ import java.util.List;
 
 public class EventRepository {
     private List<Event> _events;
+    private List<Projection> _subscribedProjections = new LinkedList<>();
 
     public EventRepository() {
         _events = new LinkedList<>();
@@ -14,7 +15,20 @@ public class EventRepository {
 
     public void addEvent(Event e) {
         _events.add(e);
+        publishEvent(e);
     }
 
-    public List<Event> getEvents() { return _events; }
+    public List<Event> getEvents() {
+        return _events;
+    }
+
+    public void subscribeProjection(Projection projection) {
+        _subscribedProjections.add(projection);
+    }
+
+    private void publishEvent(Event event) {
+        for (Projection projection : _subscribedProjections) {
+            projection.receiveEvent(event);
+        }
+    }
 }

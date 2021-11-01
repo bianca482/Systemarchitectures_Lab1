@@ -4,7 +4,7 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.Room
 
 import java.time.LocalDateTime;
 
-public class RoomBooking {
+public class Booking {
     private RoomNr _roomNr;
     private ReservationNr _reservationNr;
     private LocalDateTime _checkInTime;
@@ -26,7 +26,7 @@ public class RoomBooking {
         return _checkOutTime;
     }
 
-    public RoomBooking(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
+    public Booking(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
         _roomNr = roomNr;
         _reservationNr = reservationNr;
         _checkInTime = checkInTime;

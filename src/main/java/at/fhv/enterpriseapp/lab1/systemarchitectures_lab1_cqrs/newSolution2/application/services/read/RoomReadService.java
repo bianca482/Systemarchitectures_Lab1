@@ -26,11 +26,15 @@ public class RoomReadService {
         for (Room room : roomList) {
             if (room.maxCapacity() >= freeRoomsQuery.numberOfGuests()) {
                 List<Booking> allBookings = _bookingReadRepository.getAllBookings(room.roomNr());
-                for (Booking booking : allBookings) {
-                    if (!((booking.checkInDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkInDate().isBefore(freeRoomsQuery.checkOutTime())) ||
-                            (booking.checkOutDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkOutDate().isBefore(freeRoomsQuery.checkOutTime())))) {
-                        freeRooms.add(room);
+                if(allBookings != null ) {
+                    for (Booking booking : allBookings) {
+                        if (!((booking.checkInDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkInDate().isBefore(freeRoomsQuery.checkOutTime())) ||
+                                (booking.checkOutDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkOutDate().isBefore(freeRoomsQuery.checkOutTime())))) {
+                            freeRooms.add(room);
+                        }
                     }
+                }else{
+                    freeRooms.add(room);
                 }
             }
         }

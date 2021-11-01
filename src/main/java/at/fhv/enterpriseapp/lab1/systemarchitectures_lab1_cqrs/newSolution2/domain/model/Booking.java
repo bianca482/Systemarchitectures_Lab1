@@ -33,6 +33,18 @@ public class Booking {
         return _checkOutDate;
     }
 
-    public GuestId guestId() { return _guestId; }
+    public GuestId guestId() {
+        return _guestId;
+    }
 
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "_roomNr=" + _roomNr +
+                ", _reservationNr=" + _reservationNr +
+                ", _checkInDate=" + _checkInDate +
+                ", _checkOutDate=" + _checkOutDate +
+                ", _guestId=" + _guestId +
+                '}';
+    }
 }

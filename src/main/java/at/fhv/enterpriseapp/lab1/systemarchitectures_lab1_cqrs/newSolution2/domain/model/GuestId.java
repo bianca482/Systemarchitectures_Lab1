@@ -25,4 +25,11 @@ public class GuestId {
     public int hashCode() {
         return Objects.hash(_id);
     }
+
+    @Override
+    public String toString() {
+        return "GuestId{" +
+                "_id='" + _id + '\'' +
+                '}';
+    }
 }

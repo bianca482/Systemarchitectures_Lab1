@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.write;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.write;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.application.RandomIDCreator;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.application.implementation.RandomIDCreatorImpl;

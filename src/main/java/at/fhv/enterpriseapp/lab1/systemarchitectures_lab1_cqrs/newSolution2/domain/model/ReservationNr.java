@@ -9,7 +9,9 @@ public class ReservationNr {
         _number = number;
     }
 
-    public String number() { return _number; }
+    public String number() {
+        return _number;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -22,5 +24,12 @@ public class ReservationNr {
     @Override
     public int hashCode() {
         return Objects.hash(_number);
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationNr{" +
+                "_number='" + _number + '\'' +
+                '}';
     }
 }
