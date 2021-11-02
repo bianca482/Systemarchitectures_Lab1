@@ -19,7 +19,7 @@ public class RoomReadRepository {
     public List<Room> createRooms() {
         Random random = new Random();
         List<Room> rooms = new LinkedList<>();
-        for(int i = 0; i <= 30; i++) {
+        for(int i = 0; i < 30; i++) {
             rooms.add(new Room(new RoomNr(i), random.nextInt(4)));
         }
         return rooms;

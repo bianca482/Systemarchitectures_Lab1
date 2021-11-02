@@ -12,4 +12,10 @@ public class RoomCancelledEvent extends Event {
     public ReservationNr reservationNr() {
         return _reservationNr;
     }
+
+    @Override
+    public String toString() {
+        return "RoomCancelledEvent: " +
+                "reservationNr=" + _reservationNr;
+    }
 }

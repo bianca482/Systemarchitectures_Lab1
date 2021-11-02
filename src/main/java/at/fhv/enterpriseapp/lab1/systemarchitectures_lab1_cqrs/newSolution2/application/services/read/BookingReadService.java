@@ -21,6 +21,7 @@ public class BookingReadService {
         List<Booking> bookings = _readRepository.getAllBookings();
         List<Booking> result = new LinkedList<>();
 
+        //ToDo: Logik testen
         for (Booking booking : bookings) {
             /*if (booking.checkInDate().isBefore(allBookingsQuery.checkInDate()) && booking.checkOutDate().isAfter(allBookingsQuery.checkOutDate())) {
                 result.add(booking);
@@ -37,7 +38,10 @@ public class BookingReadService {
                 result.add(booking);
             }
              */
-            if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
+//            if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
+//                result.add(booking);
+//            }
+            if (!(booking.checkOutDate().isBefore(allBookingsQuery.checkInDate()) || booking.checkInDate().isAfter(allBookingsQuery.checkOutDate()))) {
                 result.add(booking);
             }
         }

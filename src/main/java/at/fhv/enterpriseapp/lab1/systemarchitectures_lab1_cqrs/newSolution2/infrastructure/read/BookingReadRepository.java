@@ -42,18 +42,17 @@ public class BookingReadRepository implements Projection {
 
     @Override
     public void receiveEvent(Event event) {
-            // RoomBookedEvent
+        // RoomBookedEvent
         if (event instanceof RoomBookedEvent) {
             RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
             if (!_bookings.containsKey(roomBookedEvent.roomNr())) {
-
                 _bookings.put(roomBookedEvent.roomNr().number(), new LinkedList<>());
             }
             List<Booking> bookings = _bookings.get(roomBookedEvent.roomNr().number());
             Booking booking = new Booking(roomBookedEvent.roomNr(), roomBookedEvent.reservationNr(), roomBookedEvent.checkInDate(), roomBookedEvent.checkOutDate(), roomBookedEvent.guestId());
             bookings.add(booking);
 
-            // RoomCanceledEvent
+        // RoomCanceledEvent
         } else if (event instanceof RoomCancelledEvent) {
             RoomCancelledEvent roomCancelledEvent = (RoomCancelledEvent) event;
             Booking bookingToCancel = null;

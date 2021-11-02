@@ -1,7 +1,7 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.write;
 
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.application.RandomIDCreator;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.application.implementation.RandomIDCreatorImpl;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.RandomIDCreator;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.implementation.RandomIDCreatorImpl;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomRepository;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.ReservationNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.Room;
