@@ -22,13 +22,22 @@ public class BookingReadService {
         List<Booking> result = new LinkedList<>();
 
         for (Booking booking : bookings) {
-            if (booking.checkInDate().isBefore(allBookingsQuery.checkInDate()) && booking.checkOutDate().isAfter(allBookingsQuery.checkOutDate())) {
+            /*if (booking.checkInDate().isBefore(allBookingsQuery.checkInDate()) && booking.checkOutDate().isAfter(allBookingsQuery.checkOutDate())) {
                 result.add(booking);
             } else if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
                 result.add(booking);
             } else if (booking.checkInDate().isBefore(allBookingsQuery.checkInDate()) && booking.checkOutDate().isAfter(allBookingsQuery.checkOutDate())) {
                 result.add(booking);
             } else if (booking.checkInDate().isBefore(allBookingsQuery.checkOutDate()) && booking.checkOutDate().isAfter(allBookingsQuery.checkOutDate())) {
+                result.add(booking);
+            }
+            nur 2. Abfrage gültig
+            wenn Buchungen nur checkOut oder checkIn Datum im gewählten Zeitraum haben dann folgende Möglichkeit:
+            if (!(booking.checkOutDate().isBefore(allBookingsQuery.checkInDate()) || booking.checkInDate().isAfter(allBookingsQuery.checkOutDate()))) {
+                result.add(booking);
+            }
+             */
+            if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
                 result.add(booking);
             }
         }

@@ -2,17 +2,17 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.*;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomBookingProjection;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.BookingProjection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomProjection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomRepository;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.read.BookingReadService;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.read.RoomReadService;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.write.BookingWriteService;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.read.BookingReadService;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.read.RoomReadService;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.write.BookingWriteService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.commands.BookRoomCommand;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.commands.RoomMaxCapacityCommand;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.queries.BookingsQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.queries.FreeRoomsQuery;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.write.RoomWriteService;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.write.RoomWriteService;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -26,8 +26,8 @@ public class RunMe {
         RoomRepository roomRepository = new RoomRepository(rooms);
 
         // Read Model 1
-        RoomBookingProjection roomBookingProjection = new RoomBookingProjection();
-        roomRepository.subscribe(roomBookingProjection);
+        BookingProjection bookingProjection = new BookingProjection();
+        roomRepository.subscribe(bookingProjection);
 
         // Read Model2
         RoomProjection roomInfoProjection = new RoomProjection();
@@ -46,12 +46,12 @@ public class RunMe {
         roomService.applyRoomMaxCapacityCommand(new RoomMaxCapacityCommand(roomNr, 2));
 
         // Query 1
-        BookingReadService bookingReadService = new BookingReadService(roomBookingProjection);
+        BookingReadService bookingReadService = new BookingReadService(bookingProjection);
         BookingsQuery bookingsQuery = new BookingsQuery(LocalDateTime.of(2020, 10, 1, 0, 0), LocalDateTime.of(2023, 10, 10, 0, 0));
-        List<RoomBooking> roomBooking = bookingReadService.query(bookingsQuery);
+        List<Booking> booking = bookingReadService.query(bookingsQuery);
 
         // Query 2
-        RoomReadService roomReadService = new RoomReadService(roomBookingProjection, roomInfoProjection);
+        RoomReadService roomReadService = new RoomReadService(bookingProjection, roomInfoProjection);
         FreeRoomsQuery freeRoomsQuery = new FreeRoomsQuery(LocalDateTime.of(2020, 10, 2, 0, 0), LocalDateTime.of(2020, 10, 10, 0, 0), 1);
         List<Room> freeRooms = roomReadService.query(freeRoomsQuery);
 

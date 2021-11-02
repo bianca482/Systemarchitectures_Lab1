@@ -16,4 +16,12 @@ public class Guest {
     public String name() {
         return _name;
     }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "_guestId=" + _guestId +
+                ", _name='" + _name + '\'' +
+                '}';
+    }
 }

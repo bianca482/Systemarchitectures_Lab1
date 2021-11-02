@@ -1,5 +1,6 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.events;
 
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.ReservationNr;
 import java.time.LocalDateTime;
@@ -9,12 +10,14 @@ public class RoomBookedEvent extends Event {
    private ReservationNr _reservationNr;
    private LocalDateTime _checkInDate;
    private LocalDateTime _checkOutDate;
+   private GuestId _guestId;
 
-    public RoomBookedEvent(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime) {
+    public RoomBookedEvent(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime, GuestId guestId) {
         _roomNr = roomNr;
         _reservationNr = reservationNr;
         _checkInDate = checkInTime;
         _checkOutDate = checkOutTime;
+        _guestId = guestId;
     }
 
     public RoomNr roomNr() {
@@ -33,12 +36,17 @@ public class RoomBookedEvent extends Event {
         return _checkOutDate;
     }
 
+    public GuestId guestId() {
+        return _guestId;
+    }
+
     @Override
     public String toString() {
         return "RoomBookedEvent: " +
                 "roomNr=" + _roomNr.number() +
-                ", reservationNr=" + _reservationNr.number() +
+                ", reservationNr=" + _reservationNr +
                 ", checkInDate=" + _checkInDate +
-                ", checkOutDate=" + _checkOutDate;
+                ", checkOutDate=" + _checkOutDate+
+                ", guestId=" + _guestId;
     }
 }

@@ -4,6 +4,7 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.domain.model.Room
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.ReservationNr;
 
 public class CancelRoomCommand {
+    // TODO RoomNr wegbringen
     private RoomNr _roomNr;
     private ReservationNr _reservationNr;
 

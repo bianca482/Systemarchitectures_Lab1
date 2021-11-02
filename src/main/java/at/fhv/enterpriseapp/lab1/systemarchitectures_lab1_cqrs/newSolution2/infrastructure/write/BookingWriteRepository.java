@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class BookingWriteRepository {
     private EventRepository _eventRepository;
-    private Map<String, Booking> _store;
+    private Map<String, Booking> _store; // TODO Wofür ist der Store nötig?
 
     public BookingWriteRepository(EventRepository eventRepository) {
         _store = new HashMap<>();
@@ -19,7 +19,7 @@ public class BookingWriteRepository {
     }
 
     public void addBooking(ReservationNr reservationNr, Booking booking) {
-        RoomBookedEvent event = new RoomBookedEvent(booking.roomNr(), reservationNr, booking.checkInDate(), booking.checkOutDate());
+        RoomBookedEvent event = new RoomBookedEvent(booking.roomNr(), reservationNr, booking.checkInDate(), booking.checkOutDate(), booking.guestId());
         _eventRepository.addEvent(event);
         _store.put(reservationNr.number(), booking);
     }

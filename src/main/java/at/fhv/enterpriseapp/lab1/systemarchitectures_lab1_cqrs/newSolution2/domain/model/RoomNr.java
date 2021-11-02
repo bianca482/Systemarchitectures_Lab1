@@ -25,4 +25,11 @@ public class RoomNr {
     public int hashCode() {
         return Objects.hash(_number);
     }
+
+    @Override
+    public String toString() {
+        return "RoomNr{" +
+                "_number=" + _number +
+                '}';
+    }
 }

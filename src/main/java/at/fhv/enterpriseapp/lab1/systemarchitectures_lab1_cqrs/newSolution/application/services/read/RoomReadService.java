@@ -1,7 +1,7 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.services.read;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.application.services.read;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.*;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomBookingProjection;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.BookingProjection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.infrastructure.RoomProjection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution.domain.queries.FreeRoomsQuery;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class RoomReadService {
 
-    private RoomBookingProjection _roomBookingProjection;
+    private BookingProjection _BookingProjection;
     private RoomProjection _roomProjection;
 
-    public RoomReadService(RoomBookingProjection roomBookingProjection, RoomProjection roomProjection) {
-        _roomBookingProjection = roomBookingProjection;
+    public RoomReadService(BookingProjection bookingProjection, RoomProjection roomProjection) {
+        _BookingProjection = bookingProjection;
         _roomProjection = roomProjection;
     }
 
@@ -25,10 +25,10 @@ public class RoomReadService {
 
         for (Room room : roomList) {
             if (room.maxCapacity() >= freeRoomsQuery.numberOfGuests()) {
-                List<RoomBooking> allBookings = _roomBookingProjection.getAllBookings(room.roomNr());
-                for (RoomBooking roomBooking : allBookings) {
-                    if (!((roomBooking.checkInTime().isAfter(freeRoomsQuery.checkInTime()) && roomBooking.checkInTime().isBefore(freeRoomsQuery.checkOutTime())) ||
-                            (roomBooking.checkOutTime().isAfter(freeRoomsQuery.checkInTime()) && roomBooking.checkOutTime().isBefore(freeRoomsQuery.checkOutTime())))) {
+                List<Booking> allBookings = _BookingProjection.getAllBookings(room.roomNr());
+                for (Booking booking : allBookings) {
+                    if (!((booking.checkInTime().isAfter(freeRoomsQuery.checkInTime()) && booking.checkInTime().isBefore(freeRoomsQuery.checkOutTime())) ||
+                            (booking.checkOutTime().isAfter(freeRoomsQuery.checkInTime()) && booking.checkOutTime().isBefore(freeRoomsQuery.checkOutTime())))) {
                         freeRooms.add(room);
                     }
                 }

@@ -31,4 +31,12 @@ public class Room {
     public int hashCode() {
         return Objects.hash(_roomNr, _maxCapacity);
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "_roomNr=" + _roomNr +
+                ", _maxCapacity=" + _maxCapacity +
+                '}';
+    }
 }

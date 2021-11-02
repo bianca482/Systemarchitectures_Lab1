@@ -31,5 +31,7 @@ public class BookRoomCommand {
         return _roomNr;
     }
 
-    public GuestId guestId() { return _guestId; }
+    public GuestId guestId() {
+        return _guestId;
+    }
 }

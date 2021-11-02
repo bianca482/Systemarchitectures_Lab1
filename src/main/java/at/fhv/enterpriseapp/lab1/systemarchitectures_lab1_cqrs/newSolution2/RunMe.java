@@ -1,6 +1,7 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.application.services.read.BookingReadService;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.application.services.read.RoomReadService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.application.services.write.BookingWriteService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.commands.BookRoomCommand;
@@ -8,6 +9,8 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.doma
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.model.Room;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.queries.AllBookingsQuery;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.queries.FreeRoomsQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.domain.queries.GetBookingQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.infrastructure.EventRepository;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.newSolution2.infrastructure.read.BookingReadRepository;
@@ -34,6 +37,9 @@ public class RunMe {
 
         BookingReadRepository bookingReadRepository = new BookingReadRepository();
         BookingReadService bookingReadService = new BookingReadService(bookingReadRepository);
+        eventRepository.subscribeProjection(bookingReadRepository);
+
+        RoomReadService roomReadService = new RoomReadService(roomReadRepository, bookingReadRepository);
 
         //Commands
         //Command: BookRoom
@@ -44,6 +50,14 @@ public class RunMe {
         System.out.println(eventRepository.getEvents().toString());
 
         //Queries
-    }
+        //Querie: GetBookings (Parameter: Zeitraum): Zeigt alle Buchungen im gewählten Zeitraum an
+        bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2021, 5, 2, 0, 0), LocalDateTime.of(2021, 5, 9, 0, 0), new RoomNr(2), new GuestId("123")));
+        List<Booking> allBookings = bookingReadService.handleQuery(new AllBookingsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0)));
+        System.out.println("all bookings: " + allBookings);
 
+        //Querie: GetFreeRooms (Parameter: Zeitraum, Anzahl Personen): Zeigt die verfügbaren Zimmer für die angefragten Daten an
+        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0), 1));
+        System.out.println("free rooms: " + freeRooms);
+    }
 }
+
