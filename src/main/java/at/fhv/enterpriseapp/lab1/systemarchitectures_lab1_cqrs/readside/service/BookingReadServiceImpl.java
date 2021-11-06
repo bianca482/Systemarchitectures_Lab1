@@ -1,7 +1,7 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.AllBookingsQuery;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingsInTimeRangeQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
 
@@ -18,7 +18,7 @@ public class BookingReadServiceImpl implements BookingReadService {
 
     // Prüft, welche Buchungen im gewünschten Zeitraum verfügbar sind
     @Override
-    public List<Booking> handleQuery(AllBookingsQuery allBookingsQuery) {
+    public List<Booking> handleQuery(GetBookingsInTimeRangeQuery getBookingsInTimeRangeQuery) {
         List<Booking> bookings = _readRepository.getAllBookings();
         List<Booking> result = new LinkedList<>();
 
@@ -42,7 +42,7 @@ public class BookingReadServiceImpl implements BookingReadService {
 //            if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
 //                result.add(booking);
 //            }
-            if (!(booking.checkOutDate().isBefore(allBookingsQuery.checkInDate()) || booking.checkInDate().isAfter(allBookingsQuery.checkOutDate()))) {
+            if (!(booking.checkOutDate().isBefore(getBookingsInTimeRangeQuery.checkInDate()) || booking.checkInDate().isAfter(getBookingsInTimeRangeQuery.checkOutDate()))) {
                 result.add(booking);
             }
         }
@@ -52,5 +52,10 @@ public class BookingReadServiceImpl implements BookingReadService {
     @Override
     public Optional<Booking> handleQuery(GetBookingQuery getBookingQuery) {
         return _readRepository.getBookingByGuestId(getBookingQuery.roomNr(), getBookingQuery.guestId());
+    }
+
+    @Override
+    public List<Booking> getAllBookings() {
+        return _readRepository.getAllBookings();
     }
 }

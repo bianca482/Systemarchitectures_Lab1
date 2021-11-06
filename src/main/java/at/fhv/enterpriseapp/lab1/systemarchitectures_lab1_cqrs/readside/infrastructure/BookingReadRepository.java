@@ -28,7 +28,6 @@ public class BookingReadRepository implements Projection {
     }
 
     public Optional<Booking> getBookingByGuestId(RoomNr roomNr, GuestId guestId) {
-        System.out.println(_bookings.values());
         List<Booking> bookingsByRoomNr = _bookings.get(roomNr.number());
         if (bookingsByRoomNr != null) {
             for (Booking b : bookingsByRoomNr) {
