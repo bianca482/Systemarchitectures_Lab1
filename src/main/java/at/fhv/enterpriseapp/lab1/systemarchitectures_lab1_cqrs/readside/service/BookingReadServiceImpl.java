@@ -51,7 +51,15 @@ public class BookingReadServiceImpl implements BookingReadService {
 
     @Override
     public Optional<Booking> handleQuery(GetBookingQuery getBookingQuery) {
-        return _readRepository.getBookingByGuestId(getBookingQuery.roomNr(), getBookingQuery.guestId());
+        List<Booking> bookingsByRoomNr = _readRepository.getAllBookings(getBookingQuery.roomNr());
+        if (bookingsByRoomNr != null) {
+            for (Booking b : bookingsByRoomNr) {
+                if (b.guestId().equals(getBookingQuery.guestId())) {
+                    return Optional.of(b);
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

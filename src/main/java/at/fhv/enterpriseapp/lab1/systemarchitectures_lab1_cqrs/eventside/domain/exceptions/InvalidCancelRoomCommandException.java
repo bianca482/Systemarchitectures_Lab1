@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions;
 
 public class InvalidCancelRoomCommandException extends Exception {
     public InvalidCancelRoomCommandException() {

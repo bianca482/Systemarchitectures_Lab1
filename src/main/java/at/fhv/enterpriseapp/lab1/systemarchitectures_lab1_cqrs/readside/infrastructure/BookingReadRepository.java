@@ -24,19 +24,10 @@ public class BookingReadRepository implements Projection {
     }
 
     public List<Booking> getAllBookings(RoomNr roomNr) {
-        return _bookings.get(roomNr.number());
-    }
-
-    public Optional<Booking> getBookingByGuestId(RoomNr roomNr, GuestId guestId) {
-        List<Booking> bookingsByRoomNr = _bookings.get(roomNr.number());
-        if (bookingsByRoomNr != null) {
-            for (Booking b : bookingsByRoomNr) {
-                if (b.guestId().equals(guestId)) {
-                    return Optional.of(b);
-                }
-            }
+        if (_bookings.containsKey(roomNr.number())) {
+            return _bookings.get(roomNr.number());
         }
-        return Optional.empty();
+        return Collections.emptyList();
     }
 
     @Override
