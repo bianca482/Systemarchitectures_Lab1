@@ -11,6 +11,7 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastr
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.infrastructure.BookingWriteRepository;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +24,6 @@ public class RunMe {
         BookingWriteService bookingWriteService = new BookingWriteServiceImpl(bookingWriteRepository, bookingReadService);
 
         eventRepository.subscribeProjection(bookingReadRepository);
-
-        RoomReadRepository roomReadRepository = new RoomReadRepository();
-        RoomReadService roomReadService = new RoomReadServiceImpl(roomReadRepository, bookingReadRepository);
 
         //Commands
         //Command: BookRoom
@@ -94,8 +92,51 @@ public class RunMe {
 
         //Query: GetFreeRooms (Parameter: Zeitraum, Anzahl Personen): Zeigt die verfügbaren Zimmer für die angefragten Daten an
         System.out.println("----------GetFreeRoomsQuery----------");
-        // ToDo: Testfälle bereitstellen, insbesondere Datumslogik prüfen (Ilona)
-        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2021, 5, 1, 0, 0), LocalDateTime.of(2021, 5, 10, 0, 0), 1));
+        // Räume anlegen
+        Room room30 = new Room(new RoomNr(30), 2);
+        Room room31 = new Room(new RoomNr(31), 2);
+        Room room32 = new Room(new RoomNr(32), 2);
+        Room room33 = new Room(new RoomNr(33), 2);
+        Room room34 = new Room(new RoomNr(34), 2);
+        Room room35 = new Room(new RoomNr(35), 2);
+        Room room36 = new Room(new RoomNr(36), 2);
+        Room room37 = new Room(new RoomNr(37), 1);
+        Room room38 = new Room(new RoomNr(38), 2);
+
+        List <Room> rooms = new LinkedList<>();
+        rooms.add(0, room30);
+        rooms.add(1, room31);
+        rooms.add(2, room32);
+        rooms.add(3, room33);
+        rooms.add(4, room34);
+        rooms.add(5, room35);
+        rooms.add(6, room36);
+        rooms.add(7, room37);
+        rooms.add(8, room38);
+
+        RoomReadRepository roomReadRepository = new RoomReadRepository(rooms);
+        RoomReadService roomReadService = new RoomReadServiceImpl(roomReadRepository, bookingReadRepository);
+        // Buchungen erstellen (Anschließender Such-Zeitraum wird von 01.02.2022 - 07.02.2022 für 2 Personen sein)
+        try {
+            // Buchung fängt vor dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), room30.roomNr(), new GuestId("1234")));
+            // Buchung fängt vor dem Such-Zeitraum an und endet in dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 3, 0, 0), room31.roomNr(), new GuestId("5678")));
+            // Buchung fängt in dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 6, 0, 0), LocalDateTime.of(2022, 2, 9, 0, 0), room32.roomNr(), new GuestId("9101")));
+            // Buchung fängt in dem Such-Zeitraum an und endet in dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 2, 0, 0), LocalDateTime.of(2022, 2, 5, 0, 0), room33.roomNr(), new GuestId("1213")));
+            // Buchung fängt vor dem Such-Zeitraum an und endet vor dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 26, 0, 0), LocalDateTime.of(2022, 1, 28, 0, 0), room34.roomNr(), new GuestId("1415")));
+            // Buchung fängt nach dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 3, 1, 0, 0), LocalDateTime.of(2022, 3, 7, 0, 0), room35.roomNr(), new GuestId("1617")));
+            // Buchung fängt im Such-Zeitraum an und endet im dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), room36.roomNr(), new GuestId("1819")));
+        } catch (RoomOccupiedException | InvalidTimeRangeException e) {
+            e.printStackTrace();
+        }
+        // Räume suchen, die im angegebenen Zeitraum frei sind --> Nummer 34, 35 und 37 sind frei
+        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), 2));
         System.out.println("Free rooms: " + freeRooms);
 
         //Query: GetBookings

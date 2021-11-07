@@ -28,15 +28,15 @@ public class RoomReadServiceImpl implements RoomReadService {
             //Prüfen, ob der Raum genügend Platz hat
             if (room.maxCapacity() >= freeRoomsQuery.numberOfGuests()) {
                 List<Booking> allBookings = _bookingReadRepository.getAllBookings(room.roomNr());
-                if (allBookings != null ) {
+                boolean roomIsFree = true;
+                if (allBookings != null) {
                     for (Booking booking : allBookings) {
-                        //Über die Buchung herausfinden, ob der Raum belegt ist oder nicht
-                        if (!((booking.checkInDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkInDate().isBefore(freeRoomsQuery.checkOutTime())) ||
-                                (booking.checkOutDate().isAfter(freeRoomsQuery.checkInTime()) && booking.checkOutDate().isBefore(freeRoomsQuery.checkOutTime())))) {
-                            freeRooms.add(room);
+                        if (!((booking.checkOutDate().isBefore(freeRoomsQuery.checkInTime()) || booking.checkInDate().isAfter(freeRoomsQuery.checkOutTime())))) {
+                            roomIsFree = false;
                         }
                     }
-                } else {
+                }
+                if (roomIsFree) {
                     freeRooms.add(room);
                 }
             }

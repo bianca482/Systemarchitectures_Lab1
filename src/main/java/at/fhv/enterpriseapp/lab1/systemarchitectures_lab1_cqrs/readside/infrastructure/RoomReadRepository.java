@@ -8,6 +8,10 @@ import java.util.*;
 public class RoomReadRepository {
     private List<Room> _rooms;
 
+    public RoomReadRepository(List <Room> rooms){
+        _rooms = rooms;
+    }
+
     public RoomReadRepository() {
         _rooms = createRooms();
     }
