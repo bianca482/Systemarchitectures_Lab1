@@ -27,8 +27,6 @@ public class WriteSide {
 
     @Autowired
     private EventPublisher _publisher;
-    @Autowired
-    private WritesidePortConfigurator _portConfigurator;
 
     public static void main(String[] args) {
         SpringApplication.run(WriteSide.class, args);
