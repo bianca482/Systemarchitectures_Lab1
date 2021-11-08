@@ -10,29 +10,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EventRepository {
-    private List<Event> _events;
-    private List<Projection> _subscribedProjections = new LinkedList<>();
-    private List<String> _subscribedEndpoints = new LinkedList<>();
+    private List<Event> events;
+    private List<Projection> subscribedProjections = new LinkedList<>();
+    private List<String> subscribedEndpoints = new LinkedList<>();
+
     public EventRepository() {
-        _events = new LinkedList<>();
-        _subscribedEndpoints.add("http://localhost:8082");
+        events = new LinkedList<>();
+        subscribedEndpoints.add("http://localhost:8082");
     }
 
     public void addEvent(Event e) {
-        _events.add(e);
+        events.add(e);
         publishEventRest(e);
     }
 
     public List<Event> getEvents() {
-        return _events;
+        return events;
     }
 
     public void subscribeProjection(Projection projection) {
-        _subscribedProjections.add(projection);
+        subscribedProjections.add(projection);
     }
 
     private void publishEventRest(Event event) {
-        for(String endpoint : this._subscribedEndpoints) {
+        for(String endpoint : this.subscribedEndpoints) {
             WebClient localApiClient = WebClient.create(endpoint);
 
             localApiClient
@@ -48,7 +49,7 @@ public class EventRepository {
     }
 
     private void publishEvent(Event event) {
-        for (Projection projection : _subscribedProjections) {
+        for (Projection projection : subscribedProjections) {
             projection.receiveEvent(event);
         }
     }

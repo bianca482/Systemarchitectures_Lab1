@@ -10,16 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookingReadServiceImpl implements BookingReadService {
-    private BookingReadRepository _readRepository;
+    private BookingReadRepository readRepository;
+
+    public BookingReadServiceImpl() {
+
+    }
 
     public BookingReadServiceImpl(BookingReadRepository readRepository) {
-        _readRepository = readRepository;
+        this.readRepository = readRepository;
     }
 
     // Prüft, welche Buchungen im gewünschten Zeitraum verfügbar sind
     @Override
     public List<Booking> handleQuery(GetBookingsInTimeRangeQuery getBookingsInTimeRangeQuery) {
-        List<Booking> bookings = _readRepository.getAllBookings();
+        List<Booking> bookings = readRepository.getAllBookings();
         List<Booking> result = new LinkedList<>();
 
         //ToDo: Logik testen
@@ -42,7 +46,7 @@ public class BookingReadServiceImpl implements BookingReadService {
 //            if (booking.checkInDate().isAfter(allBookingsQuery.checkInDate()) && booking.checkOutDate().isBefore(allBookingsQuery.checkOutDate())) {
 //                result.add(booking);
 //            }
-            if (!(booking.checkOutDate().isBefore(getBookingsInTimeRangeQuery.checkInDate()) || booking.checkInDate().isAfter(getBookingsInTimeRangeQuery.checkOutDate()))) {
+            if (!(booking.getCheckOutDate().isBefore(getBookingsInTimeRangeQuery.getCheckInDate()) || booking.getCheckInDate().isAfter(getBookingsInTimeRangeQuery.getCheckOutDate()))) {
                 result.add(booking);
             }
         }
@@ -51,10 +55,10 @@ public class BookingReadServiceImpl implements BookingReadService {
 
     @Override
     public Optional<Booking> handleQuery(GetBookingQuery getBookingQuery) {
-        List<Booking> bookingsByRoomNr = _readRepository.getAllBookings(getBookingQuery.roomNr());
+        List<Booking> bookingsByRoomNr = readRepository.getAllBookings(getBookingQuery.getRoomNr());
         if (bookingsByRoomNr != null) {
             for (Booking b : bookingsByRoomNr) {
-                if (b.guestId().equals(getBookingQuery.guestId())) {
+                if (b.getGuestId().equals(getBookingQuery.getGuestId())) {
                     return Optional.of(b);
                 }
             }
@@ -64,6 +68,6 @@ public class BookingReadServiceImpl implements BookingReadService {
 
     @Override
     public List<Booking> getAllBookings() {
-        return _readRepository.getAllBookings();
+        return readRepository.getAllBookings();
     }
 }

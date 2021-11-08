@@ -3,48 +3,72 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain
 import java.time.LocalDateTime;
 
 public class Booking {
-    private RoomNr _roomNr;
-    private ReservationNr _reservationNr;
-    private LocalDateTime _checkInDate;
-    private LocalDateTime _checkOutDate;
-    private GuestId _guestId;
+    private RoomNr roomNr;
+    private ReservationNr reservationNr;
+    private LocalDateTime checkInDate;
+    private LocalDateTime checkOutDate;
+    private GuestId guestId;
 
-    public Booking(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime, GuestId guestId) {
-        _roomNr = roomNr;
-        _reservationNr = reservationNr;
-        _checkInDate = checkInTime;
-        _checkOutDate = checkOutTime;
-        _guestId = guestId;
+    public Booking() {
+
     }
 
-    public RoomNr roomNr() {
-        return _roomNr;
+    public Booking(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInDate, LocalDateTime checkOutDate, GuestId guestId) {
+        this.roomNr = roomNr;
+        this.reservationNr = reservationNr;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.guestId = guestId;
     }
 
-    public ReservationNr reservationNr() {
-        return _reservationNr;
+    public RoomNr getRoomNr() {
+        return roomNr;
     }
 
-    public LocalDateTime checkInDate() {
-        return _checkInDate;
+    public void setRoomNr(RoomNr roomNr) {
+        this.roomNr = roomNr;
     }
 
-    public LocalDateTime checkOutDate() {
-        return _checkOutDate;
+    public ReservationNr getReservationNr() {
+        return reservationNr;
     }
 
-    public GuestId guestId() {
-        return _guestId;
+    public void setReservationNr(ReservationNr reservationNr) {
+        this.reservationNr = reservationNr;
+    }
+
+    public LocalDateTime getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(LocalDateTime checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public LocalDateTime getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDateTime checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public GuestId getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(GuestId guestId) {
+        this.guestId = guestId;
     }
 
     @Override
     public String toString() {
         return "Booking{" +
-                "_roomNr=" + _roomNr +
-                ", _reservationNr=" + _reservationNr +
-                ", _checkInDate=" + _checkInDate +
-                ", _checkOutDate=" + _checkOutDate +
-                ", _guestId=" + _guestId +
+                "_roomNr=" + roomNr +
+                ", _reservationNr=" + reservationNr +
+                ", _checkInDate=" + checkInDate +
+                ", _checkOutDate=" + checkOutDate +
+                ", _guestId=" + guestId +
                 '}';
     }
 }

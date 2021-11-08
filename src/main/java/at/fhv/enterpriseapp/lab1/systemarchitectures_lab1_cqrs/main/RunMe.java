@@ -48,7 +48,7 @@ public class RunMe {
         Optional<Booking> booking = bookingReadService.handleQuery(new GetBookingQuery(new RoomNr(2), new GuestId("123")));
         booking.ifPresent(value -> {
             try {
-                bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(value.reservationNr()));
+                bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(value.getReservationNr()));
             } catch (InvalidCancelRoomCommandException e) {
                 e.printStackTrace();
             }
@@ -121,19 +121,19 @@ public class RunMe {
         // Buchungen erstellen (Anschließender Such-Zeitraum wird von 01.02.2022 - 07.02.2022 für 2 Personen sein)
         try {
             // Buchung fängt vor dem Such-Zeitraum an und endet nach dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), room30.roomNr(), new GuestId("1234")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), room30.getRoomNr(), new GuestId("1234")));
             // Buchung fängt vor dem Such-Zeitraum an und endet in dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 3, 0, 0), room31.roomNr(), new GuestId("5678")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 3, 0, 0), room31.getRoomNr(), new GuestId("5678")));
             // Buchung fängt in dem Such-Zeitraum an und endet nach dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 6, 0, 0), LocalDateTime.of(2022, 2, 9, 0, 0), room32.roomNr(), new GuestId("9101")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 6, 0, 0), LocalDateTime.of(2022, 2, 9, 0, 0), room32.getRoomNr(), new GuestId("9101")));
             // Buchung fängt in dem Such-Zeitraum an und endet in dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 2, 0, 0), LocalDateTime.of(2022, 2, 5, 0, 0), room33.roomNr(), new GuestId("1213")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 2, 0, 0), LocalDateTime.of(2022, 2, 5, 0, 0), room33.getRoomNr(), new GuestId("1213")));
             // Buchung fängt vor dem Such-Zeitraum an und endet vor dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 26, 0, 0), LocalDateTime.of(2022, 1, 28, 0, 0), room34.roomNr(), new GuestId("1415")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 26, 0, 0), LocalDateTime.of(2022, 1, 28, 0, 0), room34.getRoomNr(), new GuestId("1415")));
             // Buchung fängt nach dem Such-Zeitraum an und endet nach dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 3, 1, 0, 0), LocalDateTime.of(2022, 3, 7, 0, 0), room35.roomNr(), new GuestId("1617")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 3, 1, 0, 0), LocalDateTime.of(2022, 3, 7, 0, 0), room35.getRoomNr(), new GuestId("1617")));
             // Buchung fängt im Such-Zeitraum an und endet im dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), room36.roomNr(), new GuestId("1819")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), room36.getRoomNr(), new GuestId("1819")));
         } catch (RoomOccupiedException | InvalidTimeRangeException e) {
             e.printStackTrace();
         }

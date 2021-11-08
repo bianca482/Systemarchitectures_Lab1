@@ -5,7 +5,6 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import org.springframework.stereotype.Component;
 
@@ -14,20 +13,20 @@ import java.util.stream.Collectors;
 
 @Component
 public class BookingReadRepository implements Projection {
-    private Map<Integer, List<Booking>> _bookings;
+    private Map<Integer, List<Booking>> bookings;
 
     public BookingReadRepository() {
-        _bookings = new HashMap<>();
+        bookings = new HashMap<>();
     }
 
     public List<Booking> getAllBookings() {
         //List<List<Booking>> in eine einzelne List konvertieren
-        return _bookings.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        return bookings.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public List<Booking> getAllBookings(RoomNr roomNr) {
-        if (_bookings.containsKey(roomNr.number())) {
-            return _bookings.get(roomNr.number());
+        if (bookings.containsKey(roomNr.getNumber())) {
+            return bookings.get(roomNr.getNumber());
         }
         return Collections.emptyList();
     }
@@ -37,10 +36,10 @@ public class BookingReadRepository implements Projection {
         // RoomBookedEvent
         if (event instanceof RoomBookedEvent) {
             RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
-            if (!_bookings.containsKey(roomBookedEvent.getRoomNr().number())) {
-                _bookings.put(roomBookedEvent.getRoomNr().number(), new LinkedList<>());
+            if (!bookings.containsKey(roomBookedEvent.getRoomNr().getNumber())) {
+                bookings.put(roomBookedEvent.getRoomNr().getNumber(), new LinkedList<>());
             }
-            List<Booking> bookings = _bookings.get(roomBookedEvent.getRoomNr().number());
+            List<Booking> bookings = this.bookings.get(roomBookedEvent.getRoomNr().getNumber());
             Booking booking = new Booking(roomBookedEvent.getRoomNr(), roomBookedEvent.getReservationNr(), roomBookedEvent.getCheckInDate(), roomBookedEvent.getCheckOutDate(), roomBookedEvent.getGuestId());
             bookings.add(booking);
 
@@ -49,9 +48,9 @@ public class BookingReadRepository implements Projection {
             RoomCancelledEvent roomCancelledEvent = (RoomCancelledEvent) event;
             Booking bookingToCancel = null;
 
-            for (List<Booking> list : _bookings.values()) {
+            for (List<Booking> list : bookings.values()) {
                 for (Booking value : list) {
-                    if (value.reservationNr().equals(roomCancelledEvent.reservationNr())) {
+                    if (value.getReservationNr().equals(roomCancelledEvent.getReservationNr())) {
                         bookingToCancel = value;
                     }
                 }
@@ -60,7 +59,7 @@ public class BookingReadRepository implements Projection {
                 }
             }
             if (bookingToCancel != null) {
-                List<Booking> bookings = _bookings.get(bookingToCancel.roomNr().number());
+                List<Booking> bookings = this.bookings.get(bookingToCancel.getRoomNr().getNumber());
                 bookings.remove(bookingToCancel);
             }
         }

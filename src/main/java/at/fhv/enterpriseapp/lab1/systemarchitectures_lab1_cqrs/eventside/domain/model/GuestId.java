@@ -3,33 +3,39 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain
 import java.util.Objects;
 
 public class GuestId {
-    private String _id;
+    private String id;
+
+    public GuestId() {
+
+    }
 
     public GuestId(String id) {
-        _id = id;
+        this.id = id;
     }
 
-    public String id() {
-        return _id;
+    public String getId() {
+        return id;
     }
+
+    public void setId(String id) { this.id = id; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GuestId that = (GuestId) o;
-        return Objects.equals(_id, that._id);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_id);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "GuestId{" +
-                "_id='" + _id + '\'' +
+                "_id='" + id + '\'' +
                 '}';
     }
 }

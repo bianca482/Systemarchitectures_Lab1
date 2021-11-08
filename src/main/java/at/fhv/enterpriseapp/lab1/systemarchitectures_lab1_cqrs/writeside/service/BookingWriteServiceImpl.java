@@ -17,46 +17,50 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class BookingWriteServiceImpl implements BookingWriteService {
-    private BookingWriteRepository _writeRepository;
-    private BookingReadService _bookingReadService;
-    private RandomIDCreator _idCreator;
+    private BookingWriteRepository writeRepository;
+    private BookingReadService bookingReadService;
+    private RandomIDCreator idCreator;
+
+    public BookingWriteServiceImpl() {
+
+    }
 
     // ToDo: Darf man auf den ReadService zugreifen bzw. diesen über den Konstruktur mitgeben?
     public BookingWriteServiceImpl(BookingWriteRepository writeRepository, BookingReadService bookingReadService) {
-        _writeRepository = writeRepository;
-        _bookingReadService = bookingReadService;
-        _idCreator = new RandomIDCreatorImpl();
+        this.writeRepository = writeRepository;
+        this.bookingReadService = bookingReadService;
+        idCreator = new RandomIDCreatorImpl();
     }
 
     public void applyBookRoomCommand(BookRoomCommand bookRoomCommand) throws RoomOccupiedException, InvalidTimeRangeException {
         // Prüfen, ob das CheckOutDate nach dem CheckInDate ist und ob das CheckInDate nicht in der Vergangenheit liegt
-        if (bookRoomCommand.checkOutDate().isBefore(bookRoomCommand.checkInDate()) || bookRoomCommand.checkInDate().isBefore(LocalDateTime.now().minusDays(1))) {
+        if (bookRoomCommand.getCheckOutDate().isBefore(bookRoomCommand.getCheckInDate()) || bookRoomCommand.getCheckInDate().isBefore(LocalDateTime.now().minusDays(1))) {
             throw new InvalidTimeRangeException();
         }
 
         // Check if booking could be created according to specified roomNr and time range
-        List<Booking> bookings = _bookingReadService.handleQuery(new GetBookingsInTimeRangeQuery(bookRoomCommand.checkInDate(), bookRoomCommand.checkOutDate()));
+        List<Booking> bookings = bookingReadService.handleQuery(new GetBookingsInTimeRangeQuery(bookRoomCommand.getCheckInDate(), bookRoomCommand.getCheckOutDate()));
         for (Booking booking : bookings) {
-            if (booking.roomNr().equals(bookRoomCommand.roomNr())) {
-                if (!(booking.checkOutDate().isBefore(bookRoomCommand.checkInDate()) || booking.checkInDate().isAfter(bookRoomCommand.checkOutDate()))) {
+            if (booking.getRoomNr().equals(bookRoomCommand.getRoomNr())) {
+                if (!(booking.getCheckOutDate().isBefore(bookRoomCommand.getCheckInDate()) || booking.getCheckInDate().isAfter(bookRoomCommand.getCheckOutDate()))) {
                     throw new RoomOccupiedException();
                 }
             }
         }
 
-        ReservationNr reservationNr = new ReservationNr(_idCreator.generateId());
-        Booking booking = new Booking(bookRoomCommand.roomNr(), reservationNr, bookRoomCommand.checkInDate(), bookRoomCommand.checkOutDate(), bookRoomCommand.guestId());
-        _writeRepository.addBooking(reservationNr, booking);
+        ReservationNr reservationNr = new ReservationNr(idCreator.generateId());
+        Booking booking = new Booking(bookRoomCommand.getRoomNr(), reservationNr, bookRoomCommand.getCheckInDate(), bookRoomCommand.getCheckOutDate(), bookRoomCommand.getGuestId());
+        writeRepository.addBooking(reservationNr, booking);
     }
 
     public void applyCancelRoomCommand(CancelRoomCommand cancelRoomCommand) throws InvalidCancelRoomCommandException {
         // Prüfen, ob es eine Buchung mit der angegebenen Reservierungsnummer gibt
-        List<Booking> bookings = _bookingReadService.getAllBookings();
+        List<Booking> bookings = bookingReadService.getAllBookings();
         boolean found = false;
         for (Booking booking : bookings) {
-            if (booking.reservationNr().equals(cancelRoomCommand.reservationNr())) {
+            if (booking.getReservationNr().equals(cancelRoomCommand.getReservationNr())) {
                 // Prüfen, ob das CheckOutDate in der Vergangenheit liegt
-                if (!booking.checkOutDate().isBefore(LocalDateTime.now())) {
+                if (!booking.getCheckOutDate().isBefore(LocalDateTime.now())) {
                     found = true;
                 }
             }
@@ -64,6 +68,6 @@ public class BookingWriteServiceImpl implements BookingWriteService {
         if (!found) {
             throw new InvalidCancelRoomCommandException();
         }
-        _writeRepository.cancelBooking(cancelRoomCommand.reservationNr());
+        writeRepository.cancelBooking(cancelRoomCommand.getReservationNr());
     }
 }

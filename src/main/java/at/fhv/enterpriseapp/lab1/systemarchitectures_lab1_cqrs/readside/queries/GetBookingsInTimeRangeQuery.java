@@ -4,19 +4,31 @@ import java.time.LocalDateTime;
 
 // GetBookings (Parameter: Zeitraum): Zeigt alle Buchungen im gewählten Zeitraum an
 public class GetBookingsInTimeRangeQuery {
-    private LocalDateTime _checkInDate;
-    private LocalDateTime _checkOutDate;
+    private LocalDateTime checkInDate;
+    private LocalDateTime checkOutDate;
 
-    public GetBookingsInTimeRangeQuery(LocalDateTime checkInTime, LocalDateTime checkOutTime) {
-        _checkInDate = checkInTime;
-        _checkOutDate = checkOutTime;
+    public GetBookingsInTimeRangeQuery() {
+
     }
 
-    public LocalDateTime checkInDate() {
-        return _checkInDate;
+    public GetBookingsInTimeRangeQuery(LocalDateTime checkInDate, LocalDateTime checkOutDate) {
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
     }
 
-    public LocalDateTime checkOutDate() {
-        return _checkOutDate;
+    public LocalDateTime getCheckInDate() {
+        return checkInDate;
+    }
+
+    public LocalDateTime getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckInDate(LocalDateTime checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public void setCheckOutDate(LocalDateTime checkOutDate) {
+        this.checkOutDate = checkOutDate;
     }
 }

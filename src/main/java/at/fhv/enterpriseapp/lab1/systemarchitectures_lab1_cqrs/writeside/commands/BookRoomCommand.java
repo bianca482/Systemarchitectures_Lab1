@@ -7,48 +7,52 @@ import java.time.LocalDateTime;
 
 // BookRoom (mit zumindest Zeitraum, Zimmernummer, Personendaten)
 public class BookRoomCommand {
-    private LocalDateTime _checkInDate;
-    private LocalDateTime _checkOutDate;
-    private RoomNr _roomNr;
-    private GuestId _guestId;
+    private LocalDateTime checkInDate;
+    private LocalDateTime checkOutDate;
+    private RoomNr roomNr;
+    private GuestId guestId;
     // ToDo: Reicht die GuestId oder alle Attribute (Name etc.) einzeln?
 
+    public BookRoomCommand() {
+
+    }
+
     public BookRoomCommand(LocalDateTime checkInDate, LocalDateTime checkOutDate, RoomNr roomNr, GuestId guestId) {
-        _checkInDate = checkInDate;
-        _checkOutDate = checkOutDate;
-        _roomNr = roomNr;
-        _guestId = guestId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.roomNr = roomNr;
+        this.guestId = guestId;
     }
 
-    public LocalDateTime checkInDate() {
-        return _checkInDate;
+    public LocalDateTime getCheckInDate() {
+        return checkInDate;
     }
 
-    public LocalDateTime checkOutDate() {
-        return _checkOutDate;
+    public LocalDateTime getCheckOutDate() {
+        return checkOutDate;
     }
 
-    public RoomNr roomNr() {
-        return _roomNr;
+    public RoomNr getRoomNr() {
+        return roomNr;
     }
 
-    public GuestId guestId() {
-        return _guestId;
+    public GuestId getGuestId() {
+        return guestId;
     }
 
     public void setCheckInDate(LocalDateTime checkInDate) {
-        _checkInDate = checkInDate;
+        this.checkInDate = checkInDate;
     }
 
     public void setCheckOutDate(LocalDateTime checkOutDate) {
-        _checkOutDate = checkOutDate;
+        this.checkOutDate = checkOutDate;
     }
 
     public void setRoomNr(RoomNr roomNr) {
-        _roomNr = roomNr;
+        this.roomNr = roomNr;
     }
 
     public void setGuestId(GuestId guestId) {
-        _guestId = guestId;
+        this.guestId = guestId;
     }
 }

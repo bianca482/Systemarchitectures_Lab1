@@ -5,25 +5,41 @@ import java.time.LocalDateTime;
 // GetFreeRooms (Parameter: Zeitraum, Anzahl Personen): Zeigt die verfügbaren Zimmer für die angefragten Daten an
 public class FreeRoomsQuery {
 
-    private LocalDateTime _checkInTime;
-    private LocalDateTime _checkOutTime;
-    private int _numberOfGuests;
+    private LocalDateTime checkInDate;
+    private LocalDateTime checkOutDate;
+    private int numberOfGuests;
+
+    public FreeRoomsQuery() {
+
+    }
 
     public FreeRoomsQuery(LocalDateTime checkInDate, LocalDateTime checkOutDate, int numberOfGuests) {
-        _checkInTime = checkInDate;
-        _checkOutTime = checkOutDate;
-        _numberOfGuests = numberOfGuests;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.numberOfGuests = numberOfGuests;
     }
 
-    public LocalDateTime checkInTime() {
-        return _checkInTime;
+    public LocalDateTime getCheckInDate() {
+        return checkInDate;
     }
 
-    public LocalDateTime checkOutTime() {
-        return _checkOutTime;
+    public void setCheckInDate(LocalDateTime checkInDate) {
+        this.checkInDate = checkInDate;
     }
 
-    public int numberOfGuests() {
-        return _numberOfGuests;
+    public LocalDateTime getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDateTime checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public int getNumberOfGuests() {
+        return numberOfGuests;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
     }
 }

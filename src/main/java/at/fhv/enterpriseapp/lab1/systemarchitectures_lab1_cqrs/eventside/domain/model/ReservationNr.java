@@ -3,33 +3,39 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain
 import java.util.Objects;
 
 public class ReservationNr {
-    private String _number;
+    private String number;
+
+    public ReservationNr() {
+
+    }
 
     public ReservationNr(String number) {
-        _number = number;
+        this.number = number;
     }
 
-    public String number() {
-        return _number;
+    public String getNumber() {
+        return number;
     }
+
+    public void setNumber(String number) { this.number = number; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReservationNr roomNr = (ReservationNr) o;
-        return _number.equals(roomNr._number);
+        return number.equals(roomNr.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_number);
+        return Objects.hash(number);
     }
 
     @Override
     public String toString() {
         return "ReservationNr{" +
-                "_number='" + _number + '\'' +
+                "_number='" + number + '\'' +
                 '}';
     }
 }

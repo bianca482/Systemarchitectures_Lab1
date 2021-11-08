@@ -4,17 +4,21 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 
 // CancelBooking (mit Reservierungsnummer)
 public class CancelRoomCommand {
-    private ReservationNr _reservationNr;
+    private ReservationNr reservationNr;
 
-    public CancelRoomCommand(ReservationNr reservationNr) {
-        _reservationNr = reservationNr;
+    public CancelRoomCommand() {
+
     }
 
-    public ReservationNr reservationNr() {
-        return _reservationNr;
+    public CancelRoomCommand(ReservationNr reservationNr) {
+        this.reservationNr = reservationNr;
+    }
+
+    public ReservationNr getReservationNr() {
+        return reservationNr;
     }
 
     public void setReservationNr(ReservationNr reservationNr) {
-        _reservationNr = reservationNr;
+        this.reservationNr = reservationNr;
     }
 }

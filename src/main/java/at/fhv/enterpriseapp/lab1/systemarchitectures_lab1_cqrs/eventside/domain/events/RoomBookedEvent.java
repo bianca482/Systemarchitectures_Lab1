@@ -67,7 +67,7 @@ public class RoomBookedEvent extends Event {
     @Override
     public String toString() {
         return "RoomBookedEvent: " +
-                "roomNr=" + roomNr.number() +
+                "roomNr=" + roomNr.getNumber() +
                 ", reservationNr=" + reservationNr +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate+

@@ -8,23 +8,27 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infrast
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.EventPublisher;
 
 public class BookingWriteRepository {
-    private EventRepository _eventRepository;
-    private EventPublisher _publisher;
+    private EventRepository eventRepository;
+    private EventPublisher publisher;
+
+    public BookingWriteRepository() {
+
+    }
 
     public BookingWriteRepository(EventRepository eventRepository, EventPublisher publisher) {
-        _eventRepository = eventRepository;
-        _publisher = publisher;
+        this.eventRepository = eventRepository;
+        this.publisher = publisher;
     }
 
     public void addBooking(ReservationNr reservationNr, Booking booking) {
-        RoomBookedEvent event = new RoomBookedEvent(booking.roomNr(), reservationNr, booking.checkInDate(), booking.checkOutDate(), booking.guestId());
-        _publisher.publishEvent(event);
+        RoomBookedEvent event = new RoomBookedEvent(booking.getRoomNr(), reservationNr, booking.getCheckInDate(), booking.getCheckOutDate(), booking.getGuestId());
+        publisher.publishEvent(event);
         System.out.println("event published");
     }
 
     public void cancelBooking(ReservationNr reservationNr) {
         RoomCancelledEvent event = new RoomCancelledEvent(reservationNr);
-        _publisher.publishEvent(event);
+        publisher.publishEvent(event);
         System.out.println("event published");
     }
 }

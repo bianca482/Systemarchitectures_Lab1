@@ -4,19 +4,31 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 
 public class GetBookingQuery {
-    private RoomNr _roomNr;
-    private GuestId _guestId;
+    private RoomNr roomNr;
+    private GuestId guestId;
+
+    public GetBookingQuery() {
+
+    }
 
     public GetBookingQuery(RoomNr roomNr, GuestId guestId) {
-        _roomNr = roomNr;
-        _guestId = guestId;
+        this.roomNr = roomNr;
+        this.guestId = guestId;
     }
 
-    public RoomNr roomNr() {
-        return _roomNr;
+    public RoomNr getRoomNr() {
+        return roomNr;
     }
 
-    public GuestId guestId() {
-        return _guestId;
+    public GuestId getGuestId() {
+        return guestId;
+    }
+
+    public void setRoomNr(RoomNr roomNr) {
+        this.roomNr = roomNr;
+    }
+
+    public void setGuestId(GuestId guestId) {
+        this.guestId = guestId;
     }
 }

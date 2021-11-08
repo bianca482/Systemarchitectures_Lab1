@@ -3,20 +3,32 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain
 import java.util.Objects;
 
 public class Room {
-    private RoomNr _roomNr;
-    private int _maxCapacity;
+    private RoomNr roomNr;
+    private int maxCapacity;
+
+    public Room() {
+
+    }
 
     public Room(RoomNr roomNr, int maxCapacity) {
-        _roomNr = roomNr;
-        _maxCapacity = maxCapacity;
+        this.roomNr = roomNr;
+        this.maxCapacity = maxCapacity;
     }
 
-    public RoomNr roomNr() {
-        return _roomNr;
+    public RoomNr getRoomNr() {
+        return roomNr;
     }
 
-    public int maxCapacity() {
-        return _maxCapacity;
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void setRoomNr(RoomNr roomNr) {
+        this.roomNr = roomNr;
+    }
+
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 
     @Override
@@ -24,19 +36,19 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return _maxCapacity == room._maxCapacity && Objects.equals(_roomNr, room._roomNr);
+        return maxCapacity == room.maxCapacity && Objects.equals(roomNr, room.roomNr);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(_roomNr, _maxCapacity);
+        return Objects.hash(roomNr, maxCapacity);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "_roomNr=" + _roomNr +
-                ", _maxCapacity=" + _maxCapacity +
+                "_roomNr=" + roomNr +
+                ", _maxCapacity=" + maxCapacity +
                 '}';
     }
 }

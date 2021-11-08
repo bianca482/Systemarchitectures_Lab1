@@ -6,18 +6,18 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import java.util.*;
 
 public class RoomReadRepository {
-    private List<Room> _rooms;
+    private List<Room> rooms;
 
     public RoomReadRepository(List <Room> rooms){
-        _rooms = rooms;
+        this.rooms = rooms;
     }
 
     public RoomReadRepository() {
-        _rooms = createRooms();
+        rooms = createRooms();
     }
 
     public List<Room> getAllRooms() {
-        return _rooms;
+        return rooms;
     }
 
     public List<Room> createRooms() {
