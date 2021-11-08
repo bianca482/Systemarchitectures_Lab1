@@ -15,8 +15,10 @@ public class EventRestController {
 
     @PostMapping(value = "/event/book", consumes = "application/json", produces = "application/json")
     public boolean addEvent(@RequestBody RoomBookedEvent event) {
+        System.out.println(event);
         _eventRepository.addEvent(event);
         System.out.println("event received");
+        //System.out.println(_eventRepository.getEvents());
         return true;
     }
 
@@ -24,6 +26,7 @@ public class EventRestController {
     public boolean addEvent(@RequestBody RoomCancelledEvent event) {
         _eventRepository.addEvent(event);
         System.out.println("event received");
+        //System.out.println(_eventRepository.getEvents());
         return true;
     }
 

@@ -2,6 +2,9 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infras
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.Projection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,14 +12,15 @@ import java.util.List;
 public class EventRepository {
     private List<Event> _events;
     private List<Projection> _subscribedProjections = new LinkedList<>();
-
+    private List<String> _subscribedEndpoints = new LinkedList<>();
     public EventRepository() {
         _events = new LinkedList<>();
+        _subscribedEndpoints.add("http://localhost:8082");
     }
 
     public void addEvent(Event e) {
         _events.add(e);
-        publishEvent(e);
+        publishEventRest(e);
     }
 
     public List<Event> getEvents() {
@@ -25,6 +29,22 @@ public class EventRepository {
 
     public void subscribeProjection(Projection projection) {
         _subscribedProjections.add(projection);
+    }
+
+    private void publishEventRest(Event event) {
+        for(String endpoint : this._subscribedEndpoints) {
+            WebClient localApiClient = WebClient.create(endpoint);
+
+            localApiClient
+                    .post()
+                    .uri("/event/booked")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .body(Mono.just(event), Event.class)
+                    .retrieve()
+                    .bodyToMono(Boolean.class)
+                    .block();
+        }
     }
 
     private void publishEvent(Event event) {

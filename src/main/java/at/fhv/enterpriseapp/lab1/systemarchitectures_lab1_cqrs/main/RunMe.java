@@ -3,6 +3,7 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.main;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.*;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.EventPublisher;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.*;
@@ -18,9 +19,10 @@ import java.util.Optional;
 public class RunMe {
     public static void main(String[] args) {
         EventRepository eventRepository = new EventRepository();
+        EventPublisher eventPublisher = new EventPublisher();
         BookingReadRepository bookingReadRepository = new BookingReadRepository();
         BookingReadService bookingReadService = new BookingReadServiceImpl(bookingReadRepository);
-        BookingWriteRepository bookingWriteRepository = new BookingWriteRepository(eventRepository);
+        BookingWriteRepository bookingWriteRepository = new BookingWriteRepository(eventRepository, eventPublisher);
         BookingWriteService bookingWriteService = new BookingWriteServiceImpl(bookingWriteRepository, bookingReadService);
 
         eventRepository.subscribeProjection(bookingReadRepository);

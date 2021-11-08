@@ -7,10 +7,12 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class BookingReadRepository implements Projection {
     private Map<Integer, List<Booking>> _bookings;
 
@@ -35,11 +37,11 @@ public class BookingReadRepository implements Projection {
         // RoomBookedEvent
         if (event instanceof RoomBookedEvent) {
             RoomBookedEvent roomBookedEvent = (RoomBookedEvent) event;
-            if (!_bookings.containsKey(roomBookedEvent.roomNr().number())) {
-                _bookings.put(roomBookedEvent.roomNr().number(), new LinkedList<>());
+            if (!_bookings.containsKey(roomBookedEvent.getRoomNr().number())) {
+                _bookings.put(roomBookedEvent.getRoomNr().number(), new LinkedList<>());
             }
-            List<Booking> bookings = _bookings.get(roomBookedEvent.roomNr().number());
-            Booking booking = new Booking(roomBookedEvent.roomNr(), roomBookedEvent.reservationNr(), roomBookedEvent.checkInDate(), roomBookedEvent.checkOutDate(), roomBookedEvent.guestId());
+            List<Booking> bookings = _bookings.get(roomBookedEvent.getRoomNr().number());
+            Booking booking = new Booking(roomBookedEvent.getRoomNr(), roomBookedEvent.getReservationNr(), roomBookedEvent.getCheckInDate(), roomBookedEvent.getCheckOutDate(), roomBookedEvent.getGuestId());
             bookings.add(booking);
 
         // RoomCanceledEvent
