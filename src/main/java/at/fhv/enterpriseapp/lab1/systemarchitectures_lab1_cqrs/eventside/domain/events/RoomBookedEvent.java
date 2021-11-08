@@ -12,6 +12,10 @@ public class RoomBookedEvent extends Event {
    private LocalDateTime _checkOutDate;
    private GuestId _guestId;
 
+   public RoomBookedEvent() {
+
+   }
+
     public RoomBookedEvent(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime, GuestId guestId) {
         _roomNr = roomNr;
         _reservationNr = reservationNr;

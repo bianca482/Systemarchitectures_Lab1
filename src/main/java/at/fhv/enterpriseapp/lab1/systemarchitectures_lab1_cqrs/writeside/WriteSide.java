@@ -1,8 +1,7 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.main;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.ReservationNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.EventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +15,8 @@ public class WriteSide {
 
     @Autowired
     private EventPublisher _publisher;
+    @Autowired
+    private WritesidePortConfigurator _portConfigurator;
 
     public static void main(String[] args) {
         SpringApplication.run(WriteSide.class, args);

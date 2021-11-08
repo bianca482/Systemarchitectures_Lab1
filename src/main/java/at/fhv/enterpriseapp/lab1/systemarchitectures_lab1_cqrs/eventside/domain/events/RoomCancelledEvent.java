@@ -5,6 +5,10 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 public class RoomCancelledEvent extends Event {
     private ReservationNr _reservationNr;
 
+    public RoomCancelledEvent() {
+
+    }
+
     public RoomCancelledEvent(ReservationNr reservationNr) {
         _reservationNr = reservationNr;
     }
