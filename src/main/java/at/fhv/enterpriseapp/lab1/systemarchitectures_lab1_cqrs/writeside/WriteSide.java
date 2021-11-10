@@ -21,11 +21,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@ComponentScan({"at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside"})
+@ComponentScan({"at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure"})
+@ComponentScan({"at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service"})
+@ComponentScan({"at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside"})
 @SpringBootApplication
 @Configuration
 public class WriteSide {
@@ -34,15 +39,21 @@ public class WriteSide {
         SpringApplication.run(WriteSide.class, args);
     }
 
+    @Autowired
+    BookingWriteServiceImpl bookingWriteService;
+
+    @Autowired
+    BookingReadRepository bookingReadRepository;
+
     @Bean
     public CommandLineRunner run() {
         return args -> {
             EventRepository eventRepository = new EventRepository();
             EventPublisher eventPublisher = new EventPublisher();
-            BookingReadRepository bookingReadRepository = new BookingReadRepository();
-            BookingReadService bookingReadService = new BookingReadServiceImpl(bookingReadRepository);
-            BookingWriteRepository bookingWriteRepository = new BookingWriteRepository(eventRepository, eventPublisher);
-            BookingWriteService bookingWriteService = new BookingWriteServiceImpl(bookingWriteRepository, bookingReadService);
+//            BookingReadRepository bookingReadRepository = this.bookingReadRepository;
+//            BookingReadService bookingReadService = new BookingReadServiceImpl(bookingReadRepository);
+//            BookingWriteRepository bookingWriteRepository = new BookingWriteRepository(eventRepository, eventPublisher);
+//            BookingWriteService bookingWriteService = new BookingWriteServiceImpl(bookingWriteRepository, bookingReadService);
 
             //Command: BookRoom
             System.out.println("----------BookRoomCommand----------");
@@ -52,17 +63,17 @@ public class WriteSide {
                 e.printStackTrace();
             }
 
-            //Command: CancelBooking
-            System.out.println("----------CancelBookingCommand----------");
-            Optional<Booking> booking = bookingReadService.handleQuery(new GetBookingQuery(new RoomNr(2), new GuestId("123")));
-            System.out.println(booking.isEmpty());
-            booking.ifPresent(value -> {
-                try {
-                    bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(value.getReservationNr()));
-                } catch (InvalidCancelRoomCommandException e) {
-                    e.printStackTrace();
-                }
-            });
+//            //Command: CancelBooking
+//            System.out.println("----------CancelBookingCommand----------");
+//            Optional<Booking> booking = bookingReadService.handleQuery(new GetBookingQuery(new RoomNr(2), new GuestId("123")));
+//            System.out.println(booking.isEmpty());
+//            booking.ifPresent(value -> {
+//                try {
+//                    bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(value.getReservationNr()));
+//                } catch (InvalidCancelRoomCommandException e) {
+//                    e.printStackTrace();
+//                }
+//            });
 
             System.out.println("----------GetBookingsInTimeRangeQuery----------");
             //Query: GetBookingsInTimeRangeQuery (Parameter: Zeitraum): Zeigt alle Buchungen im gewählten Zeitraum an

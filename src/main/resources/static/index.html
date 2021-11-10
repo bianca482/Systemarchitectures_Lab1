@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Command</title>
+    <script>
+
+        function onBookSubmit() {
+        }
+
+        function onBookSubmit1() {
+            var bookForm = document.getElementById("book_form");
+
+            var formObj = {};
+            var checkInDate = bookForm.elements["checkInDate"].value;
+            var checkOutDate = bookForm.elements["checkOutDate"].value;
+            var roomNr = bookForm.elements["roomNr"].value;
+            var guestId = bookForm.elements["guestId"].value;
+
+            let data = new URLSearchParams();
+            data.append(`checkInDate`, checkInDate);
+            data.append(`checkOutDate`, checkOutDate);
+            data.append(`roomNr`, roomNr);
+            data.append(`guestId`, guestId);
+
+            fetch('http://localhost:8081/book', {
+                method: 'post',
+                body: data
+            }).then(function (response) {
+                if (response.status == 200) {
+                    document.getElementById("result_label").innerText = "Result: ok";
+                } else {
+                    document.getElementById("result_label").innerText = "Result: failed";
+                }
+                return response.json();
+            });
+            return false;
+        }
+
+    </script>
+
+</head>
+
+<body>
+<div>
+    <h2>Command</h2>
+    <div style="background-color:orange;margin:10px">
+        <h3>Book</h3>
+
+        <form id="book_form" onsubmit="onBookSubmit1(); return false;">
+            <label for="checkInDate">Check In:</label>
+            <input type="date" id="checkInDate" name="check_in"><br><br>
+
+            <label for="checkOutDate">Check Out:</label>
+            <input type="date" id="checkOutDate" name="check_out"><br><br>
+
+            <label for="roomNr">Room Nr:</label>
+            <input type="number" id="roomNr" name="room_nr"><br><br>
+
+            <label for="guestId">Guest Id:</label>
+            <input type="text" id="guestId" name="guest_id"><br><br>
+
+            <input type="submit" value="Submit">
+
+            <label id="result_label">Result: </label>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+
+</html>

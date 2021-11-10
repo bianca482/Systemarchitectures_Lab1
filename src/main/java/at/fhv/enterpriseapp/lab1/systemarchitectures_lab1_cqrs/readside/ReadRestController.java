@@ -2,10 +2,12 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infrastructure.EventRepository;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ReadRestController {
@@ -27,6 +29,12 @@ public class ReadRestController {
         readRepository.receiveEvent(cancelEvent);
         System.out.println("received cancelEvent");
         return true;
+    }
+
+    @GetMapping(value = "/freeRooms", produces = "application/json")
+    public List<Booking> freeRooms() {
+        List<Booking> allBookings = readRepository.getAllBookings();
+        return allBookings;
     }
 }
 
