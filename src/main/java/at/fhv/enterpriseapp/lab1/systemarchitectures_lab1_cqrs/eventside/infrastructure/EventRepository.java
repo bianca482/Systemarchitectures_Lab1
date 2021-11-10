@@ -2,6 +2,8 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infras
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.Projection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -36,15 +38,28 @@ public class EventRepository {
         for(String endpoint : this.subscribedEndpoints) {
             WebClient localApiClient = WebClient.create(endpoint);
 
-            localApiClient
-                    .post()
-                    .uri("/event/booked")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(event), Event.class)
-                    .retrieve()
-                    .bodyToMono(Boolean.class)
-                    .block();
+            if (event instanceof RoomBookedEvent) {
+                localApiClient
+                        .post()
+                        .uri("/event/booked")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .body(Mono.just(event), Event.class)
+                        .retrieve()
+                        .bodyToMono(Boolean.class)
+                        .block();
+            }
+            else if (event instanceof RoomCancelledEvent) {
+                localApiClient
+                        .post()
+                        .uri("/event/cancelled")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .body(Mono.just(event), Event.class)
+                        .retrieve()
+                        .bodyToMono(Boolean.class)
+                        .block();
+            }
         }
     }
 
