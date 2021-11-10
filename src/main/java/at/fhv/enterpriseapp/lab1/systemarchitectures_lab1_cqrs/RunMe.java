@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.main;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.*;

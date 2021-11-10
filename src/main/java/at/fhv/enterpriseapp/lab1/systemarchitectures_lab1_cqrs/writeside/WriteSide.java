@@ -30,9 +30,6 @@ import java.util.Optional;
 @Configuration
 public class WriteSide {
 
-    @Autowired
-    private EventPublisher _publisher;
-
     public static void main(String[] args) {
         SpringApplication.run(WriteSide.class, args);
     }
