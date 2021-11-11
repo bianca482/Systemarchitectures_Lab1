@@ -2,8 +2,10 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.FreeRoomsQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingsInTimeRangeQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadService;
@@ -33,13 +35,14 @@ public class ReadSide {
         SpringApplication.run(ReadSide.class, args);
     }
 
-    @Bean
-    public CommandLineRunner run() {
-        return args -> {
-            BookingReadService bookingReadService = new BookingReadServiceImpl(readRepository);
-            Optional<Booking> booking = bookingReadService.handleQuery(new GetBookingQuery(new RoomNr(2), new GuestId("123")));
-            System.out.println(booking.isPresent());
-
+//    @Bean
+//    public CommandLineRunner run() {
+//        return args -> {
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//            BookingReadService bookingReadService = new BookingReadServiceImpl(readRepository);
+////            Optional<Booking> booking = bookingReadService.handleQuery(new GetBookingQuery(new RoomNr(2), new GuestId("123")));
+////            System.out.println(booking.isPresent());
+//
 //            Scanner scanner = new Scanner(System.in);
 //            while (true) {
 //                System.out.println("Possible queries: FreeRooms, GetBooking, GetBookingsInTimeRange");
@@ -55,39 +58,34 @@ public class ReadSide {
 //                    System.out.println(booking.isPresent());
 //
 //                } else if (query.equals("GetBookingsInTimeRange")) {
-//                    DateTimeFormatter format = DateTimeFormatter.ofPattern("YYYY-MM-DD");
-//
 //                    System.out.println("From?");
-//                    LocalDateTime from = null;
 //                    String input = scanner.nextLine();
-//                    if (!input.equals("") && input.trim().length() > 0) {
-//                        from = LocalDateTime.parse(input, format);
-//                        System.out.println(from);
-//                    }
+//                    LocalDateTime checkInDate = LocalDate.parse(input, formatter).atTime(0, 0);
 //
 //                    System.out.println("To?");
-//                    LocalDateTime to = null;
 //                    input = scanner.nextLine();
-//                    if (!input.equals("") && input.trim().length() > 0) {
-//                        to = LocalDateTime.parse(String.format(input, format));
-//                    }
+//                    LocalDateTime checkOutDate = LocalDate.parse(input, formatter).atTime(0, 0);
 //
-//                    List<Booking> bookingsInTimeRange = bookingReadService.handleQuery(new GetBookingsInTimeRangeQuery(from, to));
-//                    System.out.println("Number of bookings (expected 2): " + bookingsInTimeRange.size());
+//                    List<Booking> bookingsInTimeRange = bookingReadService.handleQuery(new GetBookingsInTimeRangeQuery(checkInDate, checkOutDate));
+//                    System.out.println("Number of bookings (expected 4): " + bookingsInTimeRange.size());
 //
 //                } else if (query.equals("FreeRooms")) {
 //                    System.out.println("From?");
-//                    String from = scanner.nextLine();
+//                    String input = scanner.nextLine();
+//                    LocalDateTime checkInDate = LocalDate.parse(input, formatter).atTime(0, 0);
+//
 //                    System.out.println("To?");
-//                    String to = scanner.nextLine();
+//                    input = scanner.nextLine();
+//                    LocalDateTime checkOutDate = LocalDate.parse(input, formatter).atTime(0, 0);
+//
 //                    System.out.println("Number of guests");
 //                    String numberOfGuests = scanner.nextLine();
 //
-//                    List<Booking> bookingsInTimeRange = bookingReadService.handleQuery(new GetBookingsInTimeRangeQuery(LocalDateTime.of(2022, 5, 1, 0, 0), LocalDateTime.of(2022, 5, 10, 0, 0)));
-//                    System.out.println("Number of bookings (expected 2): " + bookingsInTimeRange.size());
+////                    List<Room> freeRooms = bookingReadService.handleQuery(new FreeRoomsQuery(checkInDate, checkOutDate, Integer.parseInt(numberOfGuests)));
+////                    System.out.println(freeRooms.size());
 //                }
 //            }
-
-        };
-    }
+//
+//        };
+//    }
 }
