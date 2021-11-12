@@ -73,15 +73,14 @@
             data.append(`checkInDate2`, checkInDate2);
             data.append(`checkOutDate2`, checkOutDate2);
 
-            fetch('http://localhost:8081/getBookingInTimeRange', {
-                //method: get
-            }).then(function (response) {
-                if (response.status == 200) {
-                    document.getElementById("result_label_3").innerText = "Result: ok";
-                } else {
-                    document.getElementById("result_label_3").innerText = "Result: failed";
-                }
-                return response.json();
+            fetch('http://localhost:8082/getBookingInTimeRange', { method: 'get', body: data })
+                .then(function (response) {
+                    if (response.status === 200) {
+                        document.getElementById("result_label_3").innerText = "Result: ok";
+                    } else {
+                        document.getElementById("result_label_3").innerText = "Result: failed";
+                    }
+                    return response.json();
             });
             return false;
         }
@@ -134,7 +133,7 @@
         <div style="background-color:#D0A9F5;margin:10px">
             <h3>Get Bookings In Timerange</h3>
 
-            <form id="get_bookings_in_time_range_form" onsubmit="onClickGetBookingsInTimeRange(); return false;">
+            <form id="get_bookings_in_time_range_form" action="http://localhost:8082/getBookingInTimeRange" method="GET">
                 <label for="checkInDate2">Check In:</label>
                 <input type="date" id="checkInDate2" name="check_in2"><br><br>
 
@@ -153,4 +152,5 @@
 
 </body>
 
-</html>local
+</html>
+
