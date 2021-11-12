@@ -84,6 +84,21 @@ public class WriteSide {
             } catch (RoomOccupiedException | InvalidTimeRangeException e) {
                 e.printStackTrace();
             }
+
+            // Buchung fängt vor dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), new RoomNr(30), new GuestId("1234")));
+            // Buchung fängt vor dem Such-Zeitraum an und endet in dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 3, 0, 0), new RoomNr(31), new GuestId("5678")));
+            // Buchung fängt in dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 6, 0, 0), LocalDateTime.of(2022, 2, 9, 0, 0), new RoomNr(32), new GuestId("9101")));
+            // Buchung fängt in dem Such-Zeitraum an und endet in dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 2, 0, 0), LocalDateTime.of(2022, 2, 5, 0, 0), new RoomNr(33), new GuestId("1213")));
+            // Buchung fängt vor dem Such-Zeitraum an und endet vor dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 26, 0, 0), LocalDateTime.of(2022, 1, 28, 0, 0), new RoomNr(34), new GuestId("1415")));
+            // Buchung fängt nach dem Such-Zeitraum an und endet nach dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 3, 1, 0, 0), LocalDateTime.of(2022, 3, 7, 0, 0), new RoomNr(35), new GuestId("1617")));
+            // Buchung fängt im Such-Zeitraum an und endet im dem Such-Zeitraum
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), new RoomNr(36), new GuestId("1819")));
         };
     }
 }

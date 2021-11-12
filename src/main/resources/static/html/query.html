@@ -5,10 +5,16 @@
     <title>Query</title>
     <script>
 
+        function resetResultData(id) {
+            const resultContainer = document.getElementById("result_data_" + id);
+            while (resultContainer.firstChild) {
+                resultContainer.removeChild(resultContainer.lastChild);
+            }
+        }
+
         function onClickGetFreeRooms() {
             var getFreeRoomsForm = document.getElementById("get_free_rooms_form");
 
-            var formObj = {};
             var checkInDate1 = getFreeRoomsForm.elements["checkInDate1"].value;
             var checkOutDate1 = getFreeRoomsForm.elements["checkOutDate1"].value;
             var numberOfGuests = getFreeRoomsForm.elements["numberOfGuests"].value;
@@ -65,7 +71,6 @@
         function onClickGetBookingsInTimeRange() {
             var getBookingsInTimeRangeForm = document.getElementById("get_bookings_in_time_range_form");
 
-            var formObj = {};
             var checkInDate2 = getBookingsInTimeRangeForm.elements["checkInDate2"].value;
             var checkOutDate2 = getBookingsInTimeRangeForm.elements["checkOutDate2"].value;
 
@@ -73,20 +78,38 @@
             data.append(`checkInDate2`, checkInDate2);
             data.append(`checkOutDate2`, checkOutDate2);
 
-            fetch('http://localhost:8082/getBookingInTimeRange', { method: 'get', body: data })
+            const resultLabel3 = document.getElementById("result_label_3");
+
+            fetch('http://localhost:8082/getBookingInTimeRange',
+                {method: 'post', body: data})
                 .then(function (response) {
-                    if (response.status === 200) {
-                        document.getElementById("result_label_3").innerText = "Result: ok";
-                    } else {
-                        document.getElementById("result_label_3").innerText = "Result: failed";
-                    }
-                    return response.json();
+                    return response.json()
+                        .then(function (data) {
+                            if (data.length === 0) {
+                                resetResultData(3);
+                                resultLabel3.innerText = "Result: No bookings found.";
+                            } else {
+                                resultLabel3.innerText = "Result: ok";
+
+                                resetResultData(3);
+
+                                const resultContainer = document.getElementById("result_data_3");
+                                for (let i = 0; i < data.length; i++) {
+                                    const div = document.createElement("div");
+                                    div.innerText = `RoomNr: ${data[i].roomNr.number}, CheckInDate: ${data[i].checkInDate}, CheckOutDate: ${data[i].checkOutDate}`;
+                                    resultContainer.appendChild(div);
+                                }
+                            }
+                        }).catch(function (err) {
+                            resultLabel3.innerText = `Result:  ${err}`;
+                        })
+
+                }).catch(function (err) {
+                resultLabel3.innerText = `Result:  ${err}`;
             });
             return false;
         }
-
     </script>
-
 </head>
 
 <body>
@@ -108,8 +131,10 @@
 
                 <input type="submit" value="Submit">
 
+                <body>
                 <label id="result_label_1">Result: </label>
-
+                <div id="result_data_1"></div>
+                </body>
             </form>
         </div>
 
@@ -133,7 +158,7 @@
         <div style="background-color:#D0A9F5;margin:10px">
             <h3>Get Bookings In Timerange</h3>
 
-            <form id="get_bookings_in_time_range_form" action="http://localhost:8082/getBookingInTimeRange" method="GET">
+            <form id="get_bookings_in_time_range_form" onsubmit="onClickGetBookingsInTimeRange(); return false;">
                 <label for="checkInDate2">Check In:</label>
                 <input type="date" id="checkInDate2" name="check_in2"><br><br>
 
@@ -142,7 +167,10 @@
 
                 <input type="submit" value="Submit">
 
+                <body>
                 <label id="result_label_3">Result: </label>
+                <div id="result_data_3"></div>
+                </body>
 
             </form>
         </div>

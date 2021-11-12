@@ -8,7 +8,6 @@
         function onSubmitBook() {
             var bookForm = document.getElementById("book_form");
 
-            var formObj = {};
             var checkInDate = bookForm.elements["checkInDate"].value;
             var checkOutDate = bookForm.elements["checkOutDate"].value;
             var roomNr = bookForm.elements["roomNr"].value;
@@ -37,7 +36,6 @@
         function onSubmitCancel() {
             var cancelForm = document.getElementById("cancel_form");
 
-            var formObj = {};
             var reservationNr = cancelForm.elements["reservationNr"].value;
 
             let data = new URLSearchParams();
