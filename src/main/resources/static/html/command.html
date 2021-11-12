@@ -24,8 +24,13 @@
             fetch('http://localhost:8081/book', { method: 'post', body: data })
                 .then(function (response) {
                     return response.json()
-                        .then(function () {
-                            resultLabelBook.innerText = "Result: ok";
+                        .then(function (json_obj) {
+                            if(json_obj.status == "ok"){
+                                resultLabelBook.innerText = `Result: ok`;
+                            }else{
+                                resultLabelBook.innerText = `Result:  ${json_obj.info}`;
+                            }
+
                         }).catch(function (err) {
                             resultLabelBook.innerText = `Result:  ${err}`;
                         })
