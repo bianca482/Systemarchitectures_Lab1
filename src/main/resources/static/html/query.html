@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Query</title>
+    <script>
+
+        function onClickGetFreeRooms() {
+            var getFreeRoomsForm = document.getElementById("get_free_rooms_form");
+
+            var formObj = {};
+            var checkInDate1 = getFreeRoomsForm.elements["checkInDate1"].value;
+            var checkOutDate1 = getFreeRoomsForm.elements["checkOutDate1"].value;
+            var numberOfGuests = getFreeRoomsForm.elements["numberOfGuests"].value;
+
+            let data = new URLSearchParams();
+            data.append(`checkInDate1`, checkInDate1);
+            data.append(`checkOutDate1`, checkOutDate1);
+            data.append(`numberOfGuests`, numberOfGuests);
+
+            fetch('http://localhost:8081/getFreeRooms')
+                .then(response => {
+                    return response.json();
+                })
+                .then(rooms => {
+                    console.log(rooms.title);
+                });
+
+            // fetch('http://localhost:8081/getFreeRooms', {
+            //
+            // }).then(function (response) {
+            //     if (response.status == 200) {
+            //         document.getElementById("result_label_1").innerText = "Result: ok";
+            //     } else {
+            //         document.getElementById("result_label_1").innerText = "Result: failed";
+            //     }
+            //     return response.json();
+            // });
+            // return false;
+        }
+
+        function onClickGetBooking() {
+            var getBookingForm = document.getElementById("get_booking_form");
+
+            var formObj = getBookingForm.elements["roomNr"].value;
+            var guestId = getBookingForm.elements["guestId"].value;
+
+            let data = new URLSearchParams();
+            data.append(`roomNr`, roomNr);
+            data.append(`guestId`, guestId);
+
+            fetch('http://localhost:8081/getBooking', {
+                //method: get
+            }).then(function (response) {
+                if (response.status == 200) {
+                    document.getElementById("result_label_2").innerText = "Result: ok";
+                } else {
+                    document.getElementById("result_label_2").innerText = "Result: failed";
+                }
+                return response.json();
+            });
+            return false;
+        }
+
+        function onClickGetBookingsInTimeRange() {
+            var getBookingsInTimeRangeForm = document.getElementById("get_bookings_in_time_range_form");
+
+            var formObj = {};
+            var checkInDate2 = getBookingsInTimeRangeForm.elements["checkInDate2"].value;
+            var checkOutDate2 = getBookingsInTimeRangeForm.elements["checkOutDate2"].value;
+
+            let data = new URLSearchParams();
+            data.append(`checkInDate2`, checkInDate2);
+            data.append(`checkOutDate2`, checkOutDate2);
+
+            fetch('http://localhost:8081/getBookingInTimeRange', {
+                //method: get
+            }).then(function (response) {
+                if (response.status == 200) {
+                    document.getElementById("result_label_3").innerText = "Result: ok";
+                } else {
+                    document.getElementById("result_label_3").innerText = "Result: failed";
+                }
+                return response.json();
+            });
+            return false;
+        }
+
+    </script>
+
+</head>
+
+<body>
+<div>
+    <h2>Query</h2>
+    <div>
+        <div style="background-color:#A9F5BC;margin:10px">
+            <h3>Get Free Rooms</h3>
+
+            <form id="get_free_rooms_form" onsubmit="onClickGetFreeRooms(); return false;">
+                <label for="checkInDate1">Check In:</label>
+                <input type="date" id="checkInDate1" name="check_in1"><br><br>
+
+                <label for="checkOutDate1">Check Out:</label>
+                <input type="date" id="checkOutDate1" name="check_out1"><br><br>
+
+                <label for="numberOfGuests">Number Of Guests:</label>
+                <input type="number" id="numberOfGuests" name="nr_of_guests"><br><br>
+
+                <input type="submit" value="Submit">
+
+                <label id="result_label_1">Result: </label>
+
+            </form>
+        </div>
+
+        <div style="background-color:#A9E2F3;margin:10px">
+            <h3>Get Booking</h3>
+
+            <form id="get_booking_form" onsubmit="onClickGetBooking(); return false;">
+                <label for="roomNr">Room Nr:</label>
+                <input type="number" id="roomNr" name="room_nr"><br><br>
+
+                <label for="guestId">Guest Id:</label>
+                <input type="text" id="guestId" name="guest_id"><br><br>
+
+                <input type="submit" value="Submit">
+
+                <label id="result_label_2">Result: </label>
+
+            </form>
+        </div>
+
+        <div style="background-color:#D0A9F5;margin:10px">
+            <h3>Get Bookings In Timerange</h3>
+
+            <form id="get_bookings_in_time_range_form" onsubmit="onClickGetBookingsInTimeRange(); return false;">
+                <label for="checkInDate2">Check In:</label>
+                <input type="date" id="checkInDate2" name="check_in2"><br><br>
+
+                <label for="checkOutDate2">Check Out:</label>
+                <input type="date" id="checkOutDate2" name="check_out2"><br><br>
+
+                <input type="submit" value="Submit">
+
+                <label id="result_label_3">Result: </label>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+</html>local

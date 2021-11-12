@@ -13,8 +13,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class EventPublisher {
 
-    private final WebClient localApiClient = WebClient.create("http://localhost:8082");
+    private final WebClient localApiClient = WebClient.create("http://localhost:8080");
 
+    // BookingReadServiceImpl nutzt BookingReadRepository & BookingReadServiceImpl wird von BookingWriteService genutzt
     @Autowired
     BookingReadRepository bookingReadRepository;
 
@@ -27,7 +28,7 @@ public class EventPublisher {
         if (event instanceof RoomBookedEvent) {
             return localApiClient
                     .post()
-                    .uri("/event/booked")
+                    .uri("/event/book")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .body(Mono.just(event), Event.class)
@@ -38,7 +39,7 @@ public class EventPublisher {
         else if (event instanceof RoomCancelledEvent) {
             return localApiClient
                     .post()
-                    .uri("/event/cancelled")
+                    .uri("/event/cancel")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
                     .body(Mono.just(event), Event.class)

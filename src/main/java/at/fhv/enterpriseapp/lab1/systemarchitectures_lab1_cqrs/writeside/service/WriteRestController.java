@@ -1,10 +1,13 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service;
 
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidCancelRoomCommandException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.RoomOccupiedException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.ReservationNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.BookRoomCommand;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.CancelRoomCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +21,6 @@ public class WriteRestController {
     @Autowired
     private BookingWriteService bookingWriteService;
 
-
     @PostMapping(value = "/book")
     public String subscribe(@RequestParam("checkInDate") String checkInDateStr,
                             @RequestParam("checkOutDate") String checkOutDateStr,
@@ -31,6 +33,14 @@ public class WriteRestController {
         int roomNr = Integer.parseInt(roomNrStr);
 
         bookingWriteService.applyBookRoomCommand(new BookRoomCommand(checkInDate, checkOutDate, new RoomNr(roomNr), new GuestId(guestIdStr)));
+        return "{'status':'ok'}";
+    }
+
+    @PostMapping(value = "/cancel")
+    public String subscribe(@RequestParam("reservationNr") String reservationNrStr
+    ) throws InvalidCancelRoomCommandException {
+
+        bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(new ReservationNr(reservationNrStr)));
         return "{'status':'ok'}";
     }
 

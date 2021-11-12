@@ -2,7 +2,6 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +30,20 @@ public class ReadRestController {
         return true;
     }
 
-    @GetMapping(value = "/freeRooms", produces = "application/json")
-    public List<Booking> freeRooms() {
-        List<Booking> allBookings = readRepository.getAllBookings();
-        return allBookings;
-    }
+//    @GetMapping(value = "/getFreeRooms", produces = "application/json")
+//      TODO
+//      query.html fertig machen --> JSON Daten holen und mittels javascript anzeigen
+//    }
+
+//    @GetMapping(value = "/getBooking", produces = "application/json")
+//      TODO
+//      query.html fertig machen --> JSON Daten holen und mittels javascript anzeigen
+//    }
+
+//    @GetMapping(value = "/getBookingInTimeRange", produces = "application/json")
+//      TODO
+//      query.html fertig machen --> JSON Daten holen und mittels javascript anzeigen
+//    }
+
 }
 
