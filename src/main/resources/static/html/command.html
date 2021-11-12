@@ -6,12 +6,12 @@
     <script>
 
         function onSubmitBook() {
-            var bookForm = document.getElementById("book_form");
+            const bookForm = document.getElementById("book_form");
 
-            var checkInDate = bookForm.elements["checkInDate"].value;
-            var checkOutDate = bookForm.elements["checkOutDate"].value;
-            var roomNr = bookForm.elements["roomNr"].value;
-            var guestId = bookForm.elements["guestId"].value;
+            const checkInDate = bookForm.elements["checkInDate"].value;
+            const checkOutDate = bookForm.elements["checkOutDate"].value;
+            const roomNr = bookForm.elements["roomNr"].value;
+            const guestId = bookForm.elements["guestId"].value;
 
             let data = new URLSearchParams();
             data.append(`checkInDate`, checkInDate);
@@ -19,17 +19,20 @@
             data.append(`roomNr`, roomNr);
             data.append(`guestId`, guestId);
 
-            fetch('http://localhost:8081/book', {
-                method: 'post',
-                body: data
-            }).then(function (response) {
-                if (response.status == 200) {
-                    document.getElementById("result_label_book").innerText = "Result: ok";
-                } else {
-                    document.getElementById("result_label_book").innerText = "Result: failed";
-                }
-                return response.json();
-            });
+            const resultLabelBook = document.getElementById("result_label_book");
+
+            fetch('http://localhost:8081/book', { method: 'post', body: data })
+                .then(function (response) {
+                    return response.json()
+                        .then(function () {
+                            resultLabelBook.innerText = "Result: ok";
+                        }).catch(function (err) {
+                            resultLabelBook.innerText = `Result:  ${err}`;
+                        })
+                })
+                .catch(function (err) {
+                    resultLabelBook.innerText = `Result:  ${err}`;
+                });
             return false;
         }
 
@@ -45,7 +48,7 @@
                 method: 'post',
                 body: data
             }).then(function (response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     document.getElementById("result_label_cancel").innerText = "Result: ok";
                 } else {
                     document.getElementById("result_label_cancel").innerText = "Result: failed";

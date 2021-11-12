@@ -3,12 +3,16 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.FreeRoomsQuery;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingsInTimeRangeQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadServiceImpl;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.RoomReadService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.RoomReadServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ReadRestController {
@@ -25,10 +30,10 @@ public class ReadRestController {
     private BookingReadRepository readRepository;
 
     @Autowired
-    private BookingReadServiceImpl readService;
+    private BookingReadService readService;
 
     @Autowired
-    private RoomReadServiceImpl roomReadService;
+    private RoomReadService roomReadService;
 
     @PostMapping(value = "/event/booked", consumes = "application/json", produces = "application/json")
     public boolean subscribe(@RequestBody RoomBookedEvent bookedEvent) {
@@ -59,10 +64,14 @@ public class ReadRestController {
         return freeRooms;
     }
 
+    @CrossOrigin(origins = "http://localhost:8081")
+    @PostMapping(value = "/getBooking", produces = "application/json")
+    public Booking getBooking(@RequestParam("roomNr") int roomNr,
+                              @RequestParam("guestId") String guestId) {
 
-//    @CrossOrigin(origins = "http://localhost:8081")
-//    @PostMapping(value = "/getBooking", produces = "application/json")
-//    public List<Booking> getBooking(
+        Optional<Booking> booking = readService.handleQuery(new GetBookingQuery(new RoomNr(roomNr), new GuestId(guestId)));
+        return booking.orElse(null);
+    }
 
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/getBookingInTimeRange", produces = "application/json")

@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidCancelRoomCommandException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
@@ -8,6 +8,7 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.BookRoomCommand;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.CancelRoomCommand;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service.BookingWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,8 @@ public class WriteRestController {
     @Autowired
     private BookingWriteService bookingWriteService;
 
-    @PostMapping(value = "/book")
-    public String subscribe(@RequestParam("checkInDate") String checkInDateStr,
+    @PostMapping(value = "/book", produces = "application/json")
+    public String saveBooking(@RequestParam("checkInDate") String checkInDateStr,
                             @RequestParam("checkOutDate") String checkOutDateStr,
                             @RequestParam("roomNr") String roomNrStr,
                             @RequestParam("guestId") String guestIdStr
@@ -37,7 +38,7 @@ public class WriteRestController {
     }
 
     @PostMapping(value = "/cancel")
-    public String subscribe(@RequestParam("reservationNr") String reservationNrStr
+    public String cancelBooking(@RequestParam("reservationNr") String reservationNrStr
     ) throws InvalidCancelRoomCommandException {
 
         bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(new ReservationNr(reservationNrStr)));
