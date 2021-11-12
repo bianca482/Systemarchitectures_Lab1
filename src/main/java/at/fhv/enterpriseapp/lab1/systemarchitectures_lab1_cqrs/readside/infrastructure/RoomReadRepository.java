@@ -2,9 +2,11 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrast
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class RoomReadRepository {
     private List<Room> rooms;
 

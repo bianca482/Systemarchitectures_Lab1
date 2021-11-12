@@ -59,10 +59,10 @@ public class ReadRestController {
         return freeRooms;
     }
 
-//    @GetMapping(value = "/getBooking", produces = "application/json")
-//      TODO
-//      query.html fertig machen --> JSON Daten holen und mittels javascript anzeigen
-//    }
+
+//    @CrossOrigin(origins = "http://localhost:8081")
+//    @PostMapping(value = "/getBooking", produces = "application/json")
+//    public List<Booking> getBooking(
 
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/getBookingInTimeRange", produces = "application/json")

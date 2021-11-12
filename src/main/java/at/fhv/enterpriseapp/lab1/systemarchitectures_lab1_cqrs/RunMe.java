@@ -94,34 +94,13 @@ public class RunMe {
 
         //Query: GetFreeRooms (Parameter: Zeitraum, Anzahl Personen): Zeigt die verfügbaren Zimmer für die angefragten Daten an
         System.out.println("----------GetFreeRoomsQuery----------");
-        // Räume anlegen
-        Room room30 = new Room(new RoomNr(30), 2);
-        Room room31 = new Room(new RoomNr(31), 2);
-        Room room32 = new Room(new RoomNr(32), 2);
-        Room room33 = new Room(new RoomNr(33), 2);
-        Room room34 = new Room(new RoomNr(34), 2);
-        Room room35 = new Room(new RoomNr(35), 2);
-        Room room36 = new Room(new RoomNr(36), 2);
-        Room room37 = new Room(new RoomNr(37), 1);
-        Room room38 = new Room(new RoomNr(38), 2);
-
-        List <Room> rooms = new LinkedList<>();
-        rooms.add(0, room30);
-        rooms.add(1, room31);
-        rooms.add(2, room32);
-        rooms.add(3, room33);
-        rooms.add(4, room34);
-        rooms.add(5, room35);
-        rooms.add(6, room36);
-        rooms.add(7, room37);
-        rooms.add(8, room38);
 
         RoomReadRepository roomReadRepository = new RoomReadRepository();
         RoomReadService roomReadService = new RoomReadServiceImpl(roomReadRepository, bookingReadRepository);
         // Buchungen erstellen (Anschließender Such-Zeitraum wird von 01.02.2022 - 07.02.2022 für 2 Personen sein)
         try {
             // Buchung fängt vor dem Such-Zeitraum an und endet nach dem Such-Zeitraum
-            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), room30.getRoomNr(), new GuestId("1234")));
+            bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 8, 0, 0), new RoomNr(30), new GuestId("1234")));
             // Buchung fängt vor dem Such-Zeitraum an und endet in dem Such-Zeitraum
             bookingWriteService.applyBookRoomCommand(new BookRoomCommand(LocalDateTime.of(2022, 1, 28, 0, 0), LocalDateTime.of(2022, 2, 3, 0, 0), new RoomNr(31), new GuestId("5678")));
             // Buchung fängt in dem Such-Zeitraum an und endet nach dem Such-Zeitraum

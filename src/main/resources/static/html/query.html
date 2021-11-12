@@ -20,50 +20,78 @@
             var numberOfGuests = getFreeRoomsForm.elements["numberOfGuests"].value;
 
             let data = new URLSearchParams();
-            data.append(`checkInDate1`, checkInDate1);
-            data.append(`checkOutDate1`, checkOutDate1);
+            data.append(`checkInDate`, checkInDate1);
+            data.append(`checkOutDate`, checkOutDate1);
             data.append(`numberOfGuests`, numberOfGuests);
 
-            fetch('http://localhost:8081/getFreeRooms')
-                .then(response => {
-                    return response.json();
-                })
-                .then(rooms => {
-                    console.log(rooms.title);
-                });
+            const resultLabel1 = document.getElementById("result_label_1");
 
-            // fetch('http://localhost:8081/getFreeRooms', {
-            //
-            // }).then(function (response) {
-            //     if (response.status == 200) {
-            //         document.getElementById("result_label_1").innerText = "Result: ok";
-            //     } else {
-            //         document.getElementById("result_label_1").innerText = "Result: failed";
-            //     }
-            //     return response.json();
-            // });
-            // return false;
+            fetch('http://localhost:8082/getFreeRooms',
+                { method: 'post', body: data })
+                .then(function (response) {
+                    return response.json()
+                        .then(function (data) {
+                            console.log(data);
+                            if (data.length === 0) {
+                                resetResultData(1);
+                                resultLabel1.innerText = "Result: No free rooms found.";
+                            } else {
+                                resultLabel1.innerText = "Result: ok";
+
+                                resetResultData(1);
+
+                                const resultContainer = document.getElementById("result_data_1");
+                                for (let i = 0; i < data.length; i++) {
+                                    const div = document.createElement("div");
+                                    div.innerText = `RoomNr: ${data[i].roomNr.number}`;
+                                    resultContainer.appendChild(div);
+                                }
+                            }
+                        }).catch(function (err) {
+                            resultLabel1.innerText = `Result:  ${err}`;
+                        })
+
+                }).catch(function (err) {
+                resultLabel1.innerText = `Result:  ${err}`;
+            });
+            return false;
         }
 
         function onClickGetBooking() {
             var getBookingForm = document.getElementById("get_booking_form");
 
-            var formObj = getBookingForm.elements["roomNr"].value;
             var guestId = getBookingForm.elements["guestId"].value;
 
             let data = new URLSearchParams();
             data.append(`roomNr`, roomNr);
             data.append(`guestId`, guestId);
 
-            fetch('http://localhost:8081/getBooking', {
-                //method: get
-            }).then(function (response) {
-                if (response.status == 200) {
-                    document.getElementById("result_label_2").innerText = "Result: ok";
-                } else {
-                    document.getElementById("result_label_2").innerText = "Result: failed";
-                }
-                return response.json();
+            fetch('http://localhost:8081/getBooking',
+                {method: 'post', body: data})
+                .then(function (response) {
+                    return response.json()
+                        .then(function (data) {
+                            if (data.length === 0) {
+                                resetResultData();
+                                resultLabel2.innerText = "Result: No bookings found.";
+                            } else {
+                                resultLabel2.innerText = "Result: ok";
+
+                                resetResultData();
+
+                                const resultContainer = document.getElementById("result_data_2");
+                                for (let i = 0; i < data.length; i++) {
+                                    const div = document.createElement("div");
+                                    div.innerText = data[i].checkInDate + " " + data[i].checkOutDate;
+                                    resultContainer.appendChild(div);
+                                }
+                            }
+                        }).catch(function (err) {
+                            resultLabel3.innerText = "Result: " + err;
+                        })
+
+                }).catch(function (err) {
+                resultLabel3.innerText = "Result: " + err;
             });
             return false;
         }
@@ -75,8 +103,8 @@
             var checkOutDate2 = getBookingsInTimeRangeForm.elements["checkOutDate2"].value;
 
             let data = new URLSearchParams();
-            data.append(`checkInDate2`, checkInDate2);
-            data.append(`checkOutDate2`, checkOutDate2);
+            data.append(`checkInDate`, checkInDate2);
+            data.append(`checkOutDate`, checkOutDate2);
 
             const resultLabel3 = document.getElementById("result_label_3");
 
@@ -151,6 +179,7 @@
                 <input type="submit" value="Submit">
 
                 <label id="result_label_2">Result: </label>
+                <div id="result_data_2"></div>
 
             </form>
         </div>
