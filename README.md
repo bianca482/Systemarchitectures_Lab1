@@ -11,7 +11,25 @@ in einem eigenen Ordner zusammengefasst und haben alle ein eigenes Main.
 - WriteSide (Port 8081)
 - ReadSide (Port 8082)
 
+In folgender Abbildung wird das Domain Model der Applikation gezeigt. Darin
+ist ersichtlich, dass die GuestId, ReservationNr und RoomNr als Value Objects
+implementiert wurden. Diese Designentscheidung ergab sich, weil dadurch die Anzahl der
+notwendigen Übergabeparameter für die Methoden minimiert werden können.
+
 <img src="src/main/resources/static/images/DomainModel.png" alt="Abbildung Domain Model"/>
+
+Folgende Abbildung soll die Kommunikation zwischen den Klassen bzw. Applikationen
+verdeutlichen.
+
+<img src="src/main/resources/static/images/Gesamtstruktur_CQRS.png" alt="Gesamtstruktur"/>
+
+Ein erfolgreich durchgeführtes Command führt zu einem passenden Event. Die
+ReadSide erhält über eine Rest-Schnittstelle das Event und baut sich darauf
+aufbauend ein entsprechendes Objekt (z.B. Buchung) als Projektion auf. So wird
+das ReadModel aufgebaut. Diese Vorgehensweise ermöglicht es, dass die WriteSide
+lediglich die Events an die EventSide weiterleiten muss, welche auch nur die Events
+speichert. Die Objekte aus dem Domain Model selbst werden nur von der ReadSide
+benötigt.
 
 ## Verwendung
 Als erstes muss die EventSide gestartet werden. Als Nächstes wird die 
@@ -44,12 +62,11 @@ WriteSide: Über den EventPublisher werden die Events an den Rest Controller der
 EventSide: Im EventRepository werden die Subscriber gespeichert und 
 über den ReadRestController benachrichtigt, wenn ein neues Event hinzugefügt wurde.
 
-
 ## Testfälle
 Im Folgenden werden die durchgeführten Testfälle kurz beschrieben und
 dokumentiert, wie das zu erwartende Ergebnis ist.
 
-### Commands
+#### Commands
 - Gültige Buchung erstellen
   - RoomBookedEvent wurde erstellt
 - Buchung mit CheckInDate in der Vergangenheit 
@@ -65,7 +82,7 @@ dokumentiert, wie das zu erwartende Ergebnis ist.
 - Falsche Reservierungsnummer
     - InvalidReservationNrException
 
-### Queries
+#### Queries
 - FreeRoomsQuery:
   - Gültigen Zeitraum eingeben
     - z.B. Such-Zeitraum von 01.02.2022 - 07.02.2022 für 2 Personen -> Nummer 1-9, 17 und 19 sind frei
