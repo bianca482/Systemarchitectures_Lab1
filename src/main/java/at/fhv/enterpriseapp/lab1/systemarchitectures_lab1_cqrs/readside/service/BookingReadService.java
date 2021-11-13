@@ -11,6 +11,8 @@ import java.util.Optional;
 @Component
 public interface BookingReadService {
     List<Booking> handleQuery(GetBookingsInTimeRangeQuery getBookingsInTimeRangeQuery);
+
     Optional<Booking> handleQuery(GetBookingQuery getBookingQuery);
+
     List<Booking> getAllBookings();
 }

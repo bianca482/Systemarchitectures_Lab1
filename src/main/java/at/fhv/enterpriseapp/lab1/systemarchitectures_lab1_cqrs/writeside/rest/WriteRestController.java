@@ -36,19 +36,18 @@ public class WriteRestController {
 
             bookingWriteService.applyBookRoomCommand(new BookRoomCommand(checkInDate, checkOutDate, new RoomNr(roomNr), new GuestId(guestIdStr)));
             return "{\"status\":\"ok\"}";
-        } catch (InvalidTimeRangeException | RoomOccupiedException ex) {
-            return "{\"status\":\"failed\", \"info\":\"" + ex.getClass().getSimpleName() + "\"}";
+        } catch (InvalidTimeRangeException | RoomOccupiedException e) {
+            return "{\"status\":\"failed\", \"info\":\"" + e.getClass().getSimpleName() + "\"}";
         }
     }
 
     @PostMapping(value = "/cancel", produces = "application/json")
     public String cancelBooking(@RequestParam("reservationNr") String reservationNrStr) {
-
         try {
             bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(new ReservationNr(reservationNrStr)));
             return "{\"status\":\"ok\"}";
         } catch (InvalidCancelRoomCommandException e) {
-           return "{\"status\":\"failed\", \"info\":\"" + e.getClass().getSimpleName() + "\"}";
+            return "{\"status\":\"failed\", \"info\":\"" + e.getClass().getSimpleName() + "\"}";
         }
     }
 }

@@ -17,7 +17,9 @@ public class ReservationNr {
         return number;
     }
 
-    public void setNumber(String number) { this.number = number; }
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     @Override
     public boolean equals(Object o) {

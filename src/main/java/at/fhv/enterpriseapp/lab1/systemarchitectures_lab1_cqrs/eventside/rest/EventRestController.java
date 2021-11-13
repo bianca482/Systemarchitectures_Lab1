@@ -27,5 +27,4 @@ public class EventRestController {
         System.out.println("cancelled event received");
         return true;
     }
-
 }

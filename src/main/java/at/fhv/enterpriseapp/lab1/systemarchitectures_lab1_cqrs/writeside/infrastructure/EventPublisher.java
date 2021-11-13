@@ -35,8 +35,7 @@ public class EventPublisher {
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();
-        }
-        else if (event instanceof RoomCancelledEvent) {
+        } else if (event instanceof RoomCancelledEvent) {
             return localApiClient
                     .post()
                     .uri("/event/cancel")

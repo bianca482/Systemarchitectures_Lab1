@@ -10,7 +10,7 @@ import java.util.*;
 public class RoomReadRepository {
     private List<Room> rooms;
 
-    public RoomReadRepository(List <Room> rooms){
+    public RoomReadRepository(List<Room> rooms) {
         this.rooms = rooms;
     }
 
@@ -33,8 +33,17 @@ public class RoomReadRepository {
         Room room8 = new Room(new RoomNr(8), 4);
         Room room9 = new Room(new RoomNr(9), 1);
         Room room10 = new Room(new RoomNr(10), 2);
+        Room room11 = new Room(new RoomNr(11), 2);
+        Room room12 = new Room(new RoomNr(12), 2);
+        Room room13 = new Room(new RoomNr(13), 2);
+        Room room14 = new Room(new RoomNr(14), 2);
+        Room room15 = new Room(new RoomNr(15), 2);
+        Room room16 = new Room(new RoomNr(16), 2);
+        Room room17 = new Room(new RoomNr(17), 2);
+        Room room18 = new Room(new RoomNr(18), 1);
+        Room room19 = new Room(new RoomNr(19), 2);
 
-        List <Room> rooms = new LinkedList<>();
+        List<Room> rooms = new LinkedList<>();
         rooms.add(0, room1);
         rooms.add(1, room2);
         rooms.add(2, room3);
@@ -45,26 +54,15 @@ public class RoomReadRepository {
         rooms.add(7, room8);
         rooms.add(8, room9);
         rooms.add(9, room10);
-
-        Room room30 = new Room(new RoomNr(30), 2);
-        Room room31 = new Room(new RoomNr(31), 2);
-        Room room32 = new Room(new RoomNr(32), 2);
-        Room room33 = new Room(new RoomNr(33), 2);
-        Room room34 = new Room(new RoomNr(34), 2);
-        Room room35 = new Room(new RoomNr(35), 2);
-        Room room36 = new Room(new RoomNr(36), 2);
-        Room room37 = new Room(new RoomNr(37), 1);
-        Room room38 = new Room(new RoomNr(38), 2);
-
-        rooms.add(10, room30);
-        rooms.add(11, room31);
-        rooms.add(12, room32);
-        rooms.add(13, room33);
-        rooms.add(14, room34);
-        rooms.add(15, room35);
-        rooms.add(16, room36);
-        rooms.add(17, room37);
-        rooms.add(18, room38);
+        rooms.add(10, room11);
+        rooms.add(11, room12);
+        rooms.add(12, room13);
+        rooms.add(13, room14);
+        rooms.add(14, room15);
+        rooms.add(15, room16);
+        rooms.add(16, room17);
+        rooms.add(17, room18);
+        rooms.add(18, room19);
 
         return rooms;
     }

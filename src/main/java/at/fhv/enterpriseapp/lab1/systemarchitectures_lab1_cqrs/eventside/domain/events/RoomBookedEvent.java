@@ -3,18 +3,19 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.RoomNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.ReservationNr;
+
 import java.time.LocalDateTime;
 
 public class RoomBookedEvent extends Event {
-   private RoomNr roomNr;
-   private ReservationNr reservationNr;
-   private LocalDateTime checkInDate;
-   private LocalDateTime checkOutDate;
-   private GuestId guestId;
+    private RoomNr roomNr;
+    private ReservationNr reservationNr;
+    private LocalDateTime checkInDate;
+    private LocalDateTime checkOutDate;
+    private GuestId guestId;
 
-   public RoomBookedEvent() {
+    public RoomBookedEvent() {
 
-   }
+    }
 
     public RoomBookedEvent(RoomNr roomNr, ReservationNr reservationNr, LocalDateTime checkInTime, LocalDateTime checkOutTime, GuestId guestId) {
         this.roomNr = roomNr;
@@ -70,7 +71,7 @@ public class RoomBookedEvent extends Event {
                 "roomNr=" + roomNr.getNumber() +
                 ", reservationNr=" + reservationNr +
                 ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate+
+                ", checkOutDate=" + checkOutDate +
                 ", guestId=" + guestId;
     }
 }

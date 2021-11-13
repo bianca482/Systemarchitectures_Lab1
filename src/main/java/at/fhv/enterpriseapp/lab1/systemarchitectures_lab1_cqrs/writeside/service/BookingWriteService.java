@@ -10,5 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface BookingWriteService {
     void applyBookRoomCommand(BookRoomCommand bookRoomCommand) throws RoomOccupiedException, InvalidTimeRangeException;
+
     void applyCancelRoomCommand(CancelRoomCommand cancelRoomCommand) throws InvalidCancelRoomCommandException;
 }

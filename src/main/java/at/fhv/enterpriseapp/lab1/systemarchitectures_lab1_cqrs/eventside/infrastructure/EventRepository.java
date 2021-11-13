@@ -35,7 +35,7 @@ public class EventRepository {
     }
 
     private void publishEventRest(Event event) {
-        for(String endpoint : this.subscribedEndpoints) {
+        for (String endpoint : this.subscribedEndpoints) {
             WebClient localApiClient = WebClient.create(endpoint);
 
             if (event instanceof RoomBookedEvent) {
@@ -48,8 +48,7 @@ public class EventRepository {
                         .retrieve()
                         .bodyToMono(Boolean.class)
                         .block();
-            }
-            else if (event instanceof RoomCancelledEvent) {
+            } else if (event instanceof RoomCancelledEvent) {
                 localApiClient
                         .post()
                         .uri("/event/cancelled")
