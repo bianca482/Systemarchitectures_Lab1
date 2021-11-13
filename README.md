@@ -11,6 +11,8 @@ in einem eigenen Ordner zusammengefasst und haben alle ein eigenes Main.
 - WriteSide (Port 8081)
 - ReadSide (Port 8082)
 
+<img src="src/main/resources/static/images/DomainModel.png" alt="Abbildung Domain Model"/>
+
 ## Verwendung
 Als erstes muss die EventSide gestartet werden. Als Nächstes wird die 
 ReadSide gestartet, die WriteSide muss die letzte Applikation sein, die
