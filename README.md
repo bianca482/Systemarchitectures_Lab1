@@ -18,7 +18,12 @@ Command-Side as well as the Query-Side of the application.
 - Commands: localhost:8081/html/command.html
 - Queries: localhost:8082/html/query.html
 
+##Kommunikation zwischen den Applikationen
+WriteSide: Über den EventPublisher werden die Events an den Rest Controller der EventSide übertragen
 
+
+
+##Testfälle
 Buchung erstellen
 Buchung mit CheckInDate in der Vergangenheit
 Buchung mit CheckInDate nach CheckOutDate
