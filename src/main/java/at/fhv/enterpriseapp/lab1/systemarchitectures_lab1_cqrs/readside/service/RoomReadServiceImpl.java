@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.impl;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
@@ -24,11 +24,6 @@ public class RoomReadServiceImpl implements RoomReadService {
 
     public RoomReadServiceImpl() {
 
-    }
-
-    public RoomReadServiceImpl(RoomReadRepository roomReadRepository, BookingReadRepository bookingReadRepository) {
-        this.roomReadRepository = roomReadRepository;
-        this.bookingReadRepository = bookingReadRepository;
     }
 
     // Prüft, welche Zimmer für die angefragten Daten verfügbar sind

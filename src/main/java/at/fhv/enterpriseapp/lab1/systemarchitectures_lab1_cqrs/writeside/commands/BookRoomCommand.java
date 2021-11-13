@@ -11,7 +11,6 @@ public class BookRoomCommand {
     private LocalDateTime checkOutDate;
     private RoomNr roomNr;
     private GuestId guestId;
-    // ToDo: Reicht die GuestId oder alle Attribute (Name etc.) einzeln?
 
     public BookRoomCommand() {
 

@@ -1,11 +1,11 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service.impl;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidCancelRoomCommandException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.ReservationNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.service.RandomIDCreator;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.service.impl.RandomIDCreatorImpl;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.service.RandomIDCreatorImpl;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingsInTimeRangeQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadService;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.RoomOccupiedException;
@@ -28,16 +28,9 @@ public class BookingWriteServiceImpl implements BookingWriteService {
     @Autowired
     private BookingReadService bookingReadService;
 
-    private RandomIDCreator idCreator = new RandomIDCreatorImpl();
+    private RandomIDCreator idCreator;
 
     public BookingWriteServiceImpl() {
-
-    }
-
-    // ToDo: Darf man auf den ReadService zugreifen bzw. diesen über den Konstruktur mitgeben?
-    public BookingWriteServiceImpl(BookingWriteRepository writeRepository, BookingReadService bookingReadService) {
-        this.writeRepository = writeRepository;
-        this.bookingReadService = bookingReadService;
         idCreator = new RandomIDCreatorImpl();
     }
 

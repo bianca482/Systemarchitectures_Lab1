@@ -1,23 +1,24 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infrastructure;
 
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.Projection;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
 public class EventRepository {
     private List<Event> events;
-    private List<Projection> subscribedProjections = new LinkedList<>();
     private List<String> subscribedEndpoints = new LinkedList<>();
 
     public EventRepository() {
         events = new LinkedList<>();
+        //ReadSide als Subscriber hinzufügen
         subscribedEndpoints.add("http://localhost:8082");
     }
 
@@ -28,10 +29,6 @@ public class EventRepository {
 
     public List<Event> getEvents() {
         return events;
-    }
-
-    public void subscribeProjection(Projection projection) {
-        subscribedProjections.add(projection);
     }
 
     private void publishEventRest(Event event) {
@@ -59,12 +56,6 @@ public class EventRepository {
                         .bodyToMono(Boolean.class)
                         .block();
             }
-        }
-    }
-
-    private void publishEvent(Event event) {
-        for (Projection projection : subscribedProjections) {
-            projection.receiveEvent(event);
         }
     }
 }

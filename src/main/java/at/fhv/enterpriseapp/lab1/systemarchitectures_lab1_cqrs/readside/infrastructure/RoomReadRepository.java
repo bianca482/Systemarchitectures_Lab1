@@ -10,10 +10,6 @@ import java.util.*;
 public class RoomReadRepository {
     private List<Room> rooms;
 
-    public RoomReadRepository(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
     public RoomReadRepository() {
         rooms = createRooms();
     }

@@ -4,7 +4,6 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.ReservationNr;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infrastructure.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,18 +11,10 @@ import org.springframework.stereotype.Component;
 public class BookingWriteRepository {
 
     @Autowired
-    private EventRepository eventRepository;
-
-    @Autowired
     private EventPublisher publisher;
 
     public BookingWriteRepository() {
 
-    }
-
-    public BookingWriteRepository(EventRepository eventRepository, EventPublisher publisher) {
-        this.eventRepository = eventRepository;
-        this.publisher = publisher;
     }
 
     public void addBooking(ReservationNr reservationNr, Booking booking) {

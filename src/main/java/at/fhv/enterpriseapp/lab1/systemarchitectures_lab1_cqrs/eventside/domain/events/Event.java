@@ -1,7 +1,6 @@
 package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events;
 
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.service.impl.RandomIDCreatorImpl;
-
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.service.RandomIDCreatorImpl;
 import java.time.LocalDateTime;
 
 public abstract class Event {
