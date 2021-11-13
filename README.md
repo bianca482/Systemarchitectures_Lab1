@@ -85,13 +85,17 @@ dokumentiert, wie das zu erwartende Ergebnis ist.
 #### Queries
 - FreeRoomsQuery:
   - Gültigen Zeitraum eingeben
-    - z.B. Such-Zeitraum von 01.02.2022 - 07.02.2022 für 2 Personen -> Nummer 1-9, 17 und 19 sind frei
+    - z.B. Such-Zeitraum von 01.02.2022 - 07.02.2022 für 2 Personen -> Nummer 1,2,5,6,7,8,14,15,17 und 19 sind frei
   - CheckInDate nach CheckOutDate
     - InvalidTimeRangeException
-
 - GetBookingQuery:
   - Buchung suchen, die es gibt
     - Entsprechende Buchung wird zurückgeliefert
   - Buchung suchen, bei welcher jeweils GuestId oder RoomNr nicht stimmt
-    - Optional.empty
+    - "No booking found"/Optional.empty
+- GetBookingsInTimeRangeQuery:
+  - Gültigen Zeitraum eingeben 
+    - Buchungen für diesen Zeitraum werden zurückgeliefert
+  - Ungültigen Zeitraum eingeben (z.B. CheckOutDate vor CheckInDate)
+    - "No bookings found"/Empty list wird zurückgeliefert
 
