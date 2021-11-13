@@ -22,6 +22,7 @@ public class EventRestController {
 
     @PostMapping(value = "/event/cancel", consumes = "application/json", produces = "application/json")
     public boolean addEvent(@RequestBody RoomCancelledEvent event) {
+        System.out.println(event);
         eventRepository.addEvent(event);
         System.out.println("cancelled event received");
         return true;

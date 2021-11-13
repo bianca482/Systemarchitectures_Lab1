@@ -31,7 +31,6 @@
                 .then(function (response) {
                     return response.json()
                         .then(function (data) {
-                            console.log(data);
                             if (data.length === 0) {
                                 resultLabel1.innerText = "Result: No free rooms found.";
                             } else {

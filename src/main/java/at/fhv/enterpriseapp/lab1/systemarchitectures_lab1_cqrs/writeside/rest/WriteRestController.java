@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.rest;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidCancelRoomCommandException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
@@ -41,12 +41,15 @@ public class WriteRestController {
         }
     }
 
-    @PostMapping(value = "/cancel")
-    public String cancelBooking(@RequestParam("reservationNr") String reservationNrStr
-    ) throws InvalidCancelRoomCommandException {
+    @PostMapping(value = "/cancel", produces = "application/json")
+    public String cancelBooking(@RequestParam("reservationNr") String reservationNrStr) {
 
-        bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(new ReservationNr(reservationNrStr)));
-        return "{'status':'ok'}";
+        try {
+            bookingWriteService.applyCancelRoomCommand(new CancelRoomCommand(new ReservationNr(reservationNrStr)));
+            return "{\"status\":\"ok\"}";
+        } catch (InvalidCancelRoomCommandException e) {
+           return "{\"status\":\"failed\", \"info\":\"" + e.getClass().getSimpleName() + "\"}";
+        }
     }
 }
 

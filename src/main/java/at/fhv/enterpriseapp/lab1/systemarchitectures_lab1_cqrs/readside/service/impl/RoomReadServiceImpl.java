@@ -1,10 +1,12 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.impl;
 
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.FreeRoomsQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.BookingReadRepository;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.RoomReadRepository;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.RoomReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +33,10 @@ public class RoomReadServiceImpl implements RoomReadService {
 
     // Prüft, welche Zimmer für die angefragten Daten verfügbar sind
     @Override
-    public List<Room> handleQuery(FreeRoomsQuery freeRoomsQuery) {
+    public List<Room> handleQuery(FreeRoomsQuery freeRoomsQuery) throws InvalidTimeRangeException {
+        if (freeRoomsQuery.getCheckOutDate().isBefore(freeRoomsQuery.getCheckInDate())) {
+            throw new InvalidTimeRangeException();
+        }
         List<Room> roomList = roomReadRepository.getAllRooms();
         List<Room> freeRooms = new LinkedList<>();
 

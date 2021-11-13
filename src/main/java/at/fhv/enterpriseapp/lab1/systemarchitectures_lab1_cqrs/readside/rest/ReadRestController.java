@@ -1,7 +1,8 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.rest;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomCancelledEvent;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.InvalidTimeRangeException;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Booking;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.GuestId;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.Room;
@@ -11,15 +12,14 @@ import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.GetBookingsInTimeRangeQuery;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadService;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.BookingReadServiceImpl;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.RoomReadService;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.RoomReadServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +51,6 @@ public class ReadRestController {
         return true;
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/getFreeRooms", produces = "application/json")
     public List<Room> getFreeRooms(@RequestParam("checkInDate") String checkInDateStr,
                                    @RequestParam("checkOutDate") String checkOutDateStr,
@@ -60,11 +59,13 @@ public class ReadRestController {
         LocalDateTime checkInDate = LocalDate.parse(checkInDateStr, formatter).atTime(0, 0);
         LocalDateTime checkOutDate = LocalDate.parse(checkOutDateStr, formatter).atTime(0, 0);
 
-        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(checkInDate, checkOutDate, numberOfGuests));
-        return freeRooms;
+        try {
+            return roomReadService.handleQuery(new FreeRoomsQuery(checkInDate, checkOutDate, numberOfGuests));
+        } catch (InvalidTimeRangeException e) {
+            return Collections.emptyList();
+        }
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/getBooking", produces = "application/json")
     public Booking getBooking(@RequestParam("roomNr") int roomNr,
                               @RequestParam("guestId") String guestId) {
@@ -73,7 +74,6 @@ public class ReadRestController {
         return booking.orElse(null);
     }
 
-    @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(value = "/getBookingInTimeRange", produces = "application/json")
     public List<Booking> getBookingsInTimeRange(@RequestParam("checkInDate") String checkInDateStr,
                                                 @RequestParam("checkOutDate") String checkOutDateStr) {
@@ -81,8 +81,7 @@ public class ReadRestController {
         LocalDateTime checkInDate = LocalDate.parse(checkInDateStr, formatter).atTime(0, 0);
         LocalDateTime checkOutDate = LocalDate.parse(checkOutDateStr, formatter).atTime(0, 0);
 
-        List<Booking> bookingsInTimeRange = readService.handleQuery(new GetBookingsInTimeRangeQuery(checkInDate, checkOutDate));
-        return bookingsInTimeRange;
+        return readService.handleQuery(new GetBookingsInTimeRangeQuery(checkInDate, checkOutDate));
     }
 }
 

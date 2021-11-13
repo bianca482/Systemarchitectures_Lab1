@@ -1,4 +1,4 @@
-package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside;
+package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.infrastructure;
 
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.Event;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.events.RoomBookedEvent;
@@ -17,7 +17,7 @@ public class EventPublisher {
 
     // BookingReadServiceImpl nutzt BookingReadRepository & BookingReadServiceImpl wird von BookingWriteService genutzt
     @Autowired
-    BookingReadRepository bookingReadRepository;
+    private BookingReadRepository bookingReadRepository;
 
     public EventPublisher() {
     }

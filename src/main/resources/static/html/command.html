@@ -25,9 +25,9 @@
                 .then(function (response) {
                     return response.json()
                         .then(function (json_obj) {
-                            if(json_obj.status == "ok"){
+                            if(json_obj.status === "ok"){
                                 resultLabelBook.innerText = `Result: ok`;
-                            }else{
+                            } else{
                                 resultLabelBook.innerText = `Result:  ${json_obj.info}`;
                             }
 
@@ -42,24 +42,32 @@
         }
 
         function onSubmitCancel() {
-            var cancelForm = document.getElementById("cancel_form");
+            const cancelForm = document.getElementById("cancel_form");
 
-            var reservationNr = cancelForm.elements["reservationNr"].value;
+            const reservationNr = cancelForm.elements["reservationNr"].value;
 
             let data = new URLSearchParams();
             data.append(`reservationNr`, reservationNr);
 
-            fetch('http://localhost:8081/cancel', {
-                method: 'post',
-                body: data
-            }).then(function (response) {
-                if (response.status === 200) {
-                    document.getElementById("result_label_cancel").innerText = "Result: ok";
-                } else {
-                    document.getElementById("result_label_cancel").innerText = "Result: failed";
-                }
-                return response.json();
-            });
+            const resultLabelCancel = document.getElementById("result_label_cancel");
+
+            fetch('http://localhost:8081/cancel', { method: 'post', body: data })
+                .then(function (response) {
+                    return response.json()
+                        .then(function (json_obj) {
+                            if(json_obj.status === "ok"){
+                                resultLabelCancel.innerText = `Result: ok`;
+                            }else{
+                                resultLabelCancel.innerText = `Result:  ${json_obj.info}`;
+                            }
+
+                        }).catch(function (err) {
+                            resultLabelCancel.innerText = `Result:  ${err}`;
+                        })
+                })
+                .catch(function (err) {
+                    resultLabelCancel.innerText = `Result:  ${err}`;
+                });
             return false;
         }
 

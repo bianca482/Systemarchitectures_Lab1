@@ -3,16 +3,18 @@ package at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.exceptions.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.domain.model.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.*;
-import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.EventPublisher;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.impl.BookingReadServiceImpl;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.service.impl.RoomReadServiceImpl;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.infrastructure.EventPublisher;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.commands.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.queries.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.eventside.infrastructure.EventRepository;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.readside.infrastructure.*;
 import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.infrastructure.BookingWriteRepository;
+import at.fhv.enterpriseapp.lab1.systemarchitectures_lab1_cqrs.writeside.service.impl.BookingWriteServiceImpl;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -117,7 +119,12 @@ public class RunMe {
             e.printStackTrace();
         }
         // Räume suchen, die im angegebenen Zeitraum frei sind --> Nummer 34, 35 und 37 sind frei
-        List<Room> freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), 2));
+        List<Room> freeRooms = null;
+        try {
+            freeRooms = roomReadService.handleQuery(new FreeRoomsQuery(LocalDateTime.of(2022, 2, 1, 0, 0), LocalDateTime.of(2022, 2, 7, 0, 0), 2));
+        } catch (InvalidTimeRangeException e) {
+            e.printStackTrace();
+        }
         System.out.println("Free rooms: " + freeRooms);
 
         //Query: GetBookings
