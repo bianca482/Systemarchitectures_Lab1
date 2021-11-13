@@ -25,19 +25,19 @@ ist auch ersichtlich, wo die Commands und Queries ausgeführt werden können.
 - Commands: localhost:8081/html/command.html
 - Queries: localhost:8082/html/query.html
 
-####Unterstützte Commands:
+#### Unterstützte Commands:
 
 - BookRoomCommand (mit checkInDate, checkOutDate, roomNr, guestId), führt zu RoomBookedEvent
 - CancelRoomCommand (mit reservationNr), führt zu RoomCancelledEvent
 
-####Unterstützte Queries:
+#### Unterstützte Queries:
 
 - FreeRoomsQuery (mit checkInDate, checkOutDate, numberOfGuests)
 - GetBookingQuery (mit roomNr, guestId)
 - GetBookingsInTimeRange (mit checkInDate, checkOutDate)
 
 
-##Kommunikation zwischen den Applikationen
+## Kommunikation zwischen den Applikationen
 WriteSide: Über den EventPublisher werden die Events an den Rest Controller der EventSide 
 übertragen.
 
@@ -45,11 +45,11 @@ EventSide: Im EventRepository werden die Subscriber gespeichert und
 über den ReadRestController benachrichtigt, wenn ein neues Event hinzugefügt wurde.
 
 
-##Testfälle
+## Testfälle
 Im Folgenden werden die durchgeführten Testfälle kurz beschrieben und
 dokumentiert, wie das zu erwartende Ergebnis ist.
 
-###Commands
+### Commands
 - Gültige Buchung erstellen
   - RoomBookedEvent wurde erstellt
 - Buchung mit CheckInDate in der Vergangenheit 
@@ -65,7 +65,7 @@ dokumentiert, wie das zu erwartende Ergebnis ist.
 - Falsche Reservierungsnummer
     - InvalidReservationNrException
 
-###Queries
+### Queries
 - FreeRoomsQuery:
   - Gültigen Zeitraum eingeben
     - z.B. Such-Zeitraum von 01.02.2022 - 07.02.2022 für 2 Personen -> Nummer 1-9, 17 und 19 sind frei
