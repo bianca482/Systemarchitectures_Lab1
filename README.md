@@ -37,7 +37,7 @@ ReadSide gestartet, die WriteSide muss die letzte Applikation sein, die
 gestartet wird, da diese sowohl von der EventSide als auch von der ReadSide
 abhängig ist.
 
-Mittels Commandozeile können die Applikationen wie folgt gestartet werden:
+Mittels Commandozeile können die Applikationen wie folgt gestartet werden (Java Version 13.0.1):
 - EventSide: java -jar eventSide.jar
 - ReadSide: java -jar readSide.jar
 - WriteSide: java -jar writeSide.jar
