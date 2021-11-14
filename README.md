@@ -38,9 +38,9 @@ gestartet wird, da diese sowohl von der EventSide als auch von der ReadSide
 abhängig ist.
 
 Mittels Commandozeile können die Applikationen wie folgt gestartet werden:
-EventSide: java -jar eventSide.jar
-ReadSide: java -jar readSide.jar
-WriteSide: java -jar writeSide.jar
+- EventSide: java -jar eventSide.jar
+- ReadSide: java -jar readSide.jar
+- WriteSide: java -jar writeSide.jar
 
 Der Startpunkt der Applikation befindet sich im Browser unter localhost:8080. Dort
 ist auch ersichtlich, wo die Commands und Queries ausgeführt werden können.
@@ -82,7 +82,7 @@ dokumentiert, wie das zu erwartende Ergebnis ist.
   - Wirft RoomOccupiedException
 - Buchung der Vergangenheit erstellen und versuchen, diese zu canceln
   - wirft InvalidCancelRoomCommandException
-- Buchung canceln
+- Buchung canceln (um Buchung zu canceln GetBookingQuery oder GetBookingsInTimeRangeQuery ausführen um Reservation Number zu erhalten)
   - RoomCancelledEvent wurde erstellt
 - Falsche Reservierungsnummer
     - InvalidReservationNrException
