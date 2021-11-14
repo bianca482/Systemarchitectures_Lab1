@@ -37,6 +37,11 @@ ReadSide gestartet, die WriteSide muss die letzte Applikation sein, die
 gestartet wird, da diese sowohl von der EventSide als auch von der ReadSide
 abhängig ist.
 
+Mittels Commandozeile können die Applikationen wie folgt gestartet werden:
+EventSide: java -jar eventSide.jar
+ReadSide: java -jar readSide.jar
+WriteSide: java -jar writeSide.jar
+
 Der Startpunkt der Applikation befindet sich im Browser unter localhost:8080. Dort
 ist auch ersichtlich, wo die Commands und Queries ausgeführt werden können.
 

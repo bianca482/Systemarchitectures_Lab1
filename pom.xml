@@ -11,6 +11,7 @@
     <groupId>at.fhv.enterpriseapp.lab1</groupId>
     <artifactId>Systemarchitectures_Lab1_CQRS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>Systemarchitectures_Lab1_CQRS</name>
     <description>Systemarchitectures_Lab1_CQRS</description>
     <properties>

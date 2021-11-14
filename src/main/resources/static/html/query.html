@@ -75,7 +75,7 @@
                             } else {
                                 resultLabel2.innerText = "Result: ok";
 
-                                document.getElementById("result_data_2").innerHTML = `ReservationNr: ${data.reservationNr.number}`;
+                                document.getElementById("result_data_2").innerHTML = `RoomNr: ${data.roomNr.number}, CheckInDate: ${data.checkInDate}, CheckOutDate: ${data.checkOutDate}, ReservationNr: ${data.reservationNr.number}, GuestId: ${data.guestId.id}`;
                             }
                         }).catch(function (err) {
                             err instanceof SyntaxError ? resultLabel2.innerText = "Result: No booking found." : resultLabel2.innerText = `Result:  ${err}`;
@@ -112,7 +112,7 @@
                                 const resultContainer = document.getElementById("result_data_3");
                                 for (let i = 0; i < data.length; i++) {
                                     const div = document.createElement("div");
-                                    div.innerText = `RoomNr: ${data[i].roomNr.number}, CheckInDate: ${data[i].checkInDate}, CheckOutDate: ${data[i].checkOutDate}`;
+                                    div.innerText = `RoomNr: ${data[i].roomNr.number}, CheckInDate: ${data[i].checkInDate}, CheckOutDate: ${data[i].checkOutDate}, ReservationNr: ${data[i].reservationNr.number}, GuestId: ${data[i].guestId.id}`;
                                     resultContainer.appendChild(div);
                                 }
                             }
